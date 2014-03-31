@@ -1,0 +1,36 @@
+﻿<Window x:Class="HyperCard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" MinHeight="560" MinWidth="1024"
+        Height="560" Width="1024"
+        WindowStyle="None" AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        MouseLeftButtonDown="Window_DragMove"
+        BorderBrush="{StaticResource Color_A}" BorderThickness="0.8">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/ExTabControl.xaml"/>
+                <ResourceDictionary Source="Styles/ExTabItem.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="90*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas Grid.ColumnSpan="4" Background="{StaticResource Color_A}"/>
+        <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderThickness="0">
+            <TabItem Header="Filter"></TabItem>
+            <TabItem Header="Card List" IsSelected="True"></TabItem>
+            <TabItem Header="Sets" ></TabItem>
+        </TabControl>
+    </Grid>
+</Window>
