@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
 <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Foreground" Value="{StaticResource Color_A2}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid>
-                        <!-- 主Border -->
                         <Border Name="bd">
                             <ContentPresenter ContentSource="Header"
                                                  Margin="10,3"/>
@@ -14,11 +14,10 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <!-- 选择后背景 -->
                         <Setter TargetName="bd" Property="Background" Value="{StaticResource Color_A}" />
+                            <Setter Property="Foreground" Value="{StaticResource Color_A0}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <!-- 设置鼠标指向时的颜色 -->
                         <Setter TargetName="bd" Property="Background" Value="{StaticResource Color_A1}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

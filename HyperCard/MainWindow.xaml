@@ -6,19 +6,25 @@
         WindowStyle="None" AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
         MouseLeftButtonDown="Window_DragMove"
-        BorderBrush="{StaticResource Color_A}" BorderThickness="0.8">
+        BorderBrush="{StaticResource Color_A}" BorderThickness="0.8"
+        FontFamily="Black"
+        Background="{StaticResource Color_A0}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/ExTabControl.xaml"/>
                 <ResourceDictionary Source="Styles/ExTabItem.xaml"/>
+                <ResourceDictionary Source="Styles/MetroButton.xaml"/>
+                <ResourceDictionary Source="Styles/SimpleScrollViewer.xaml"/>
+                <ResourceDictionary Source="Styles/DataItemCheckListbox.xaml"/>
+                <ResourceDictionary Source="Styles/ExListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="90*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="92*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -26,11 +32,124 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Canvas Grid.ColumnSpan="4" Background="{StaticResource Color_A}"/>
-        <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderThickness="0">
-            <TabItem Header="Filter"></TabItem>
-            <TabItem Header="Card List" IsSelected="True"></TabItem>
-            <TabItem Header="Sets" ></TabItem>
+        <Canvas Grid.ColumnSpan="4" Background="{StaticResource Color_A}">
+            <Button Name="Close" Style="{StaticResource ButtonClose}" Canvas.Right="15" Canvas.Top="10" Width="25" Height="25"/>
+            <Button Name="Max" Style="{StaticResource ButtonMax}" Canvas.Right="45" Canvas.Top="10" Width="25" Height="25"/>
+            <Button Name="Min" Style="{StaticResource ButtonMin}" Canvas.Right="75" Canvas.Top="10" Width="25" Height="25"/>
+        </Canvas>
+        <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0" Background="Transparent" Height="513" VerticalAlignment="Bottom">
+            <TabItem Header="Filter" IsTabStop="False">
+            </TabItem>
+            <TabItem Header="Card List" IsTabStop="False" IsSelected="True">
+                <ListView BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8" ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
+                            <GridViewColumn x:Name="GridViewColumn_Name" Header="Name" Width="130" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn x:Name="GridViewColumn_Cost" Header="Cost" Width="103" CellTemplate="{StaticResource CostHeader}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Sets" IsTabStop="False">
+                <ListBox Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
+            </TabItem>
         </TabControl>
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource Color_A1}" BorderThickness="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="30*"/>
+                </Grid.RowDefinitions>
+                <Image/>
+            </Grid>
+        </Border>
+        <ListView Grid.Column="2" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
+                    <GridViewColumn x:Name="_count" Width="25" DisplayMemberBinding="{Binding num, Mode=TwoWay}" />
+                    <GridViewColumn Width="35">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl Height="10" ItemsSource="{Binding Path=tPic}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Margin="0,0,0,0" Source="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="GridViewColum_NameMain" Width="110" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn x:Name="GridViewColum_CostMain" Width="70" Header="Cost">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl Height="14" ItemsSource="{Binding Path=cPic}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Margin="0,0,0,0" Source="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.Column="3" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
+                    <GridViewColumn x:Name="_countside" Width="25" DisplayMemberBinding="{Binding num}" />
+                    <GridViewColumn Width="35">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl Height="10" ItemsSource="{Binding Path=tPic}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Margin="0,0,0,0" Source="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="GridViewColum_NameSide" Width="110" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn x:Name="GridViewColum_CostSide" Width="80" Header="Cost">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl Height="14" ItemsSource="{Binding Path=cPic}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Margin="0,0,0,0" Source="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
