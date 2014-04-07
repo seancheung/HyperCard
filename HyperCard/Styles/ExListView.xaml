@@ -3,6 +3,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ExToolTip.xaml"/>
+        <ResourceDictionary Source="SimpleScrollViewer.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ExItemContainerStyle" TargetType="{x:Type ListViewItem}">
@@ -15,7 +16,7 @@
                         <Border Name="InnerBorder" CornerRadius="0" BorderThickness="0">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition MaxHeight="11" />
+                                    <RowDefinition MaxHeight="12" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <GridViewRowPresenter Grid.RowSpan="2" 
@@ -26,20 +27,15 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="UIElement.IsMouseOver" Value="True">
                             <Setter Value="{StaticResource Color_A1}" Property="Control.Background" />
-                            <Setter Property="Control.BorderBrush" Value="#66FFFFFF" />
                         </Trigger>
                         <Trigger Property="ListBoxItem.IsSelected" Value="True">
-                            <Setter Value="{StaticResource Color_A2}" Property="Control.Background" />
-                            <Setter Property="Control.BorderBrush" Value="#66FFFFFF" />
-                            <Setter TargetName="InnerBorder" Property="Border.BorderBrush" Value="#80FFFFFF" />
+                            <Setter Value="{StaticResource Color_B1}" Property="Control.Background" />
                         </Trigger>
                         <Trigger Property="UIElement.IsEnabled" Value="False">
                             <Setter Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Property="Control.Foreground" />
                         </Trigger>
                         <Trigger Property="UIElement.IsFocused" Value="True">
-                            <Setter Value="{StaticResource Color_A1}" Property="Control.Background" />
-                            <Setter Property="Control.BorderBrush" Value="#66FFFFFF" />
-                            <Setter TargetName="InnerBorder" Property="Border.BorderBrush" Value="#80FFFFFF" />
+                            <Setter Value="{StaticResource Color_A}" Property="Control.Background" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -191,7 +187,7 @@
     </Style>
 
     <DataTemplate x:Key="CostHeader">
-        <ItemsControl Height="16" ItemsSource="{Binding Path=cPic}">
+        <ItemsControl Height="14" ItemsSource="{Binding Path=cPic}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Image Margin="0,0,0,0" Source="{Binding}" />
@@ -204,4 +200,5 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
     </DataTemplate>
+    
 </ResourceDictionary>

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Converter.cs" />
     <Compile Include="ExportData.cs" />
+    <Compile Include="LoadData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,7 @@ namespace MODEL
         /// </summary>
         /// <param name="card">the card to group a deck</param>
         /// <param name="number">Amount of the cards</param>
-        public Deck(Card card, int number)
+        public Deck(Card card, int number = 1)
         {
             this.num = number;
             if (card != null)

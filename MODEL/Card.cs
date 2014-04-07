@@ -189,15 +189,15 @@ namespace MODEL
         /// </summary>
         public string Rating { get; set; }
 
-        //public System.Collections.Generic.List<string> cPic
-        //{
-        //    get;
-        //    set;
-        //}
-        //public System.Collections.Generic.List<string> tPic
-        //{
-        //    get;
-        //    set;
-        //}
+        public System.Collections.Generic.List<string> cPic
+        {
+            get;
+            set;
+        }
+        public System.Collections.Generic.List<string> tPic
+        {
+            get;
+            set;
+        }
     }
 }

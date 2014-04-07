@@ -9,7 +9,6 @@
         ResizeMode="CanResizeWithGrip"
         MouseLeftButtonDown="Window_DragMove"
         BorderBrush="{StaticResource Color_A}" BorderThickness="0.8"
-        FontFamily="Black"
         Background="{StaticResource Color_A0}">
     <Window.Resources>
         <ResourceDictionary>
@@ -44,7 +43,7 @@
             <TabItem Header="Filter" IsTabStop="False">
             </TabItem>
             <TabItem Header="Card List" IsTabStop="False" IsSelected="True">
-                <ListView BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8" ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+                <ListView Name="resultboard" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8" ItemContainerStyle="{StaticResource ExItemContainerStyle}">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
                             <GridViewColumn x:Name="GridViewColumn_Name" Header="Name" Width="130" DisplayMemberBinding="{Binding Name}" />
@@ -54,7 +53,7 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Sets" IsTabStop="False">
-                <ListBox Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
+                <ListBox Name="allsets" Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
             </TabItem>
         </TabControl>
         <Border Grid.Column="3" Grid.Row="1" BorderBrush="{StaticResource Color_A1}" BorderThickness="0">
@@ -66,7 +65,7 @@
                 <Image/>
             </Grid>
         </Border>
-        <ListView Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+        <ListView Name="mainboard" Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
                     <GridViewColumn x:Name="_count" Width="25" DisplayMemberBinding="{Binding num, Mode=TwoWay}" />
@@ -110,7 +109,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView Grid.Column="2" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
+        <ListView Name="sideboard" Grid.Column="2" Grid.Row="1" BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  ItemContainerStyle="{StaticResource ExItemContainerStyle}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
                     <GridViewColumn x:Name="_countside" Width="25" DisplayMemberBinding="{Binding num, Mode=TwoWay}" />
