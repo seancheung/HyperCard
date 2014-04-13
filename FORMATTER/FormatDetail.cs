@@ -14,8 +14,8 @@ namespace FORMATTER
         /// Get card details
         /// </summary>
         /// <param name="card">Card to process</param>
-        /// <returns>A card with details filled</returns>
-        private static Card GetCard(Card card)
+        /// <returns>A card with details filled, if not found, NULL is returned</returns>
+        private static Card GetDetails(Card card)
         {
             string webdata = Request.GetWebData(GetURL(card.ID));
 
@@ -361,26 +361,13 @@ namespace FORMATTER
         }
 
         /// <summary>
-        /// Get a list of cards with details filled
+        /// Get card details
         /// </summary>
-        /// <param name="cards">Cards to process</param>
-        /// <returns>A list of cards with details filled</returns>
-        public static List<Card> GetCards(List<Card> cards)
+        /// <param name="card">Card to process</param>
+        /// <returns>A card with details filled, if not found, NULL is returned(Please remove)</returns>
+        public static Card GetCard(Card card)
         {
-            List<Card> result = new List<Card>();
-            foreach (var item in cards)
-            {
-                double per = 1.0 * (cards.IndexOf(item) + 1) / cards.Count;
-                Consoler.Output(string.Format("Total {0:P1} complete\n 1.Getting card details: {1:P1}", 0.2 * per, per));
-
-                Card card = GetCard(item);
-                if (card != null)
-                {
-                    result.Add(card);
-                }
-            }
-
-            return result;
+            return GetDetails(card);
         }
     }
 }

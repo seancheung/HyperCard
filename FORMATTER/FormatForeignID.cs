@@ -14,7 +14,7 @@ namespace FORMATTER
         /// <param name="card">Card to process</param>
         /// <param name="lang">Language</param>
         /// <returns>A card with foreign ID filled</returns>
-        private static Card GetCard(Card card, LANGUAGE lang)
+        private static Card GetzID(Card card, LANGUAGE lang)
         {
             string webdata = Request.GetWebData(GetURL(card.ID));
             if (!webdata.Contains("This card is available in the following languages:") || !webdata.Contains(lang.ToString().Replace("_", " ")))
@@ -50,29 +50,19 @@ namespace FORMATTER
         }
 
         /// <summary>
-        /// Get a list of cards with Foreign ID property filled
+        /// Get a card with Foreign ID property filled
         /// </summary>
-        /// <param name="cards">Cards to process</param>
+        /// <param name="card">Card to process</param>
         /// <param name="lang">Language</param>
-        /// <returns>A list of cards</returns>
-        public static List<Card> GetCards(List<Card> cards, LANGUAGE lang)
+        /// <returns>A card with zID if found</returns>
+        public static Card GetCard(Card card, LANGUAGE lang)
         {
-            List<Card> result = new List<Card>();
+            Card result = GetzID(card, lang);
 
-            foreach (var item in cards)
+            //use traditional chinese in case of simplified being unavailable
+            if (result.zID == string.Empty && lang == LANGUAGE.Chinese_Simplified)
             {
-                double per = 1.0 * (cards.IndexOf(item) + 1) / cards.Count;
-                Consoler.Output(string.Format("Total {0:P1} complete\n 2.Getting card foreign ID: {1:P1}", 0.2 + 0.2 * per, per));
-
-                Card card = GetCard(item, lang);
-
-                //use traditional chinese in case of simplified being unavailable
-                if (card.zID == string.Empty && lang == LANGUAGE.Chinese_Simplified)
-                {
-                    card = GetCard(item, LANGUAGE.Chinese_Traditional);
-                }
-
-                result.Add(card);
+                result = GetzID(card, LANGUAGE.Chinese_Traditional);
             }
 
             return result;

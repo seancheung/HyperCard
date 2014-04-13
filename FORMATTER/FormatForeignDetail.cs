@@ -14,7 +14,7 @@ namespace FORMATTER
         /// </summary>
         /// <param name="card">Card to process</param>
         /// <returns>A card with foreign details filled</returns>
-        private static Card GetCard(Card card)
+        private static Card GetzDetails(Card card)
         {
             string webdata = Request.GetWebData(GetURL(card.zID));
 
@@ -168,33 +168,25 @@ namespace FORMATTER
         }
 
         /// <summary>
-        /// Get a list of cards with foreign details filled
+        /// Get a card with foreign details filled
         /// </summary>
-        /// <param name="cards">Cards to process</param>
-        /// <returns>A list of cards with foreign details filled</returns>
-        public static List<Card> GetCards(List<Card> cards)
+        /// <param name="card">Card to process</param>
+        /// <returns>A  card with foreign details filled</returns>
+        public static Card GetCard(Card card)
         {
-            List<Card> result = new List<Card>();
-            foreach (var item in cards)
+            if (!string.IsNullOrEmpty(card.zID))
             {
-                double per = 1.0 * (cards.IndexOf(item) + 1) / cards.Count;
-                Consoler.Output(string.Format("Total {0:P1} complete\n 3.Getting card foreign details: {1:P1}", 0.4 + 0.2 * per, per));
-
-                if (!string.IsNullOrEmpty(item.zID))
-                {
-                    Card card = GetCard(item);
-                }
-                else
-                {
-                    item.zName = "";
-                    item.zType = "";
-                    item.zText = "";
-                    item.zFlavor = "";
-                }
-                result.Add(item);
+                card = GetzDetails(card);
+            }
+            else
+            {
+                card.zName = "";
+                card.zType = "";
+                card.zText = "";
+                card.zFlavor = "";
             }
 
-            return result;
+            return card;
         }
     }
 }

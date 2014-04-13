@@ -153,7 +153,7 @@ namespace HyperCard
         {
             if (!File.Exists("conf.hs"))
             {
-                Configs.Save("ENG", 1, 1);
+                Configs.Save("English", 1, 1);
             }
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load("conf.hs");

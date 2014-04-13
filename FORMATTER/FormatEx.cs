@@ -265,37 +265,31 @@ namespace FORMATTER
         /// <summary>
         /// Format properties
         /// </summary>
-        /// <param name="cards">Cards to format</param>
-        /// <returns>A list of cards with properties formatted</returns>
-        public static List<Card> Format(List<Card> cards)
+        /// <param name="card">Card to format</param>
+        /// <returns>A card with properties formatted</returns>
+        public static Card GetCard(Card card)
         {
-            foreach (var item in cards)
+            try
             {
-                double per = 1.0 * (cards.IndexOf(item) + 1) / cards.Count;
-                Consoler.Output(string.Format("Total {0:P1} complete\n 5.Formatting card: {1:P1}", 0.8 + 0.2 * per, per));
-
-                try
+                FormatzText(card);
+                FormatAdition(card);
+                FormatSpecialLetter(card);
+            }
+            catch (Exception ex)
+            {
+                string properties = string.Empty;
+                foreach (System.Reflection.PropertyInfo p in card.GetType().GetProperties())
                 {
-                    FormatzText(item);
-                    FormatAdition(item);
-                    FormatSpecialLetter(item);
-                }
-                catch (Exception ex)
-                {
-                    string properties = string.Empty;
-                    foreach (System.Reflection.PropertyInfo p in item.GetType().GetProperties())
+                    if (p.GetValue(card) == null)
                     {
-                        if (p.GetValue(item)==null)
-                        {
-                            p.SetValue(item, "NULL");
-                        }
-                        properties += string.Format("{0}:{1}\n", p.Name, p.GetValue(item));
+                        p.SetValue(card, "NULL");
                     }
-                    LoggerError.Log(String.Format("{0}\n{1}", ex.Message, properties));
+                    properties += string.Format("{0}:{1}\n", p.Name, p.GetValue(card));
                 }
+                LoggerError.Log(String.Format("{0}\n{1}", ex.Message, properties));
             }
 
-            return cards;
+            return card;
         }
     }
 }

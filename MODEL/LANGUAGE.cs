@@ -15,6 +15,7 @@ namespace MODEL
         Korean,
         Portuguese,
         Russian,
-        Spanish
+        Spanish,
+        English
     }
 }

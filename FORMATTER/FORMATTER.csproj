@@ -47,6 +47,7 @@
     <Compile Include="FormatID.cs" />
     <Compile Include="FormatLegality.cs" />
     <Compile Include="FormatLegalityList.cs" />
+    <Compile Include="FormatSets.cs" />
     <Compile Include="FormatterTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

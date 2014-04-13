@@ -10,11 +10,12 @@ namespace FORMATTER
         private FormatID() { }
 
         /// <summary>
-        /// Get Card ID,Cost,Text from webdata
+        /// Get a list of cards with ID property filled
         /// </summary>
-        /// <param name="webdata">the webdata to format</param>
+        /// <param name="setname">Full english set name</param>
+        /// <param name="setcode">Setcode in capital</param>
         /// <returns>A list of cards</returns>
-        private static List<Card> GetBasic(string setname, string setcode)
+        public static List<Card> GetCards(string setname, string setcode)
         {
             List<Card> result = new List<Card>();
 
@@ -61,17 +62,5 @@ namespace FORMATTER
             return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=+%5b%22{0}%22%5d", setname.Replace(" ", "+"));
         }
 
-        /// <summary>
-        /// Get a list of cards with ID property filled
-        /// </summary>
-        /// <param name="setname">Full english set name</param>
-        /// <param name="setcode">Setcode in capital</param>
-        /// <returns>A list of cards</returns>
-        public static List<Card> GetCards(string setname, string setcode)
-        {
-            //AllocConsole();
-            //System.Console.WriteLine("Started:");
-            return GetBasic(setname, setcode);
-        }
     }
 }

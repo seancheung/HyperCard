@@ -25,6 +25,10 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="MyContentPresenter" Property="Opacity" Value="0.5"/>
                         </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter  Property="Background" Value="{StaticResource Color_B}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

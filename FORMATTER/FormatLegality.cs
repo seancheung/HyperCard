@@ -13,7 +13,7 @@ namespace FORMATTER
         /// </summary>
         /// <param name="card">Card to process</param>
         /// <returns>A card with legality filled</returns>
-        private static Card GetCard(Card card)
+        private static Card GetLegality(Card card)
         {
             string webdata = Request.GetWebData(GetURL(card.ID));
 
@@ -60,23 +60,13 @@ namespace FORMATTER
         }
 
         /// <summary>
-        /// Get a list of cards with legality filled
+        /// Get a card with legality filled
         /// </summary>
-        /// <param name="cards">Cards to process</param>
-        /// <returns>A list of cards with legality filled</returns>
-        public static List<Card> GetCards(List<Card> cards)
+        /// <param name="card">Card to process</param>
+        /// <returns>A ard with legality filled</returns>
+        public static Card GetCard(Card card)
         {
-            List<Card> result = new List<Card>();
-            foreach (var item in cards)
-            {
-                double per = 1.0 * (cards.IndexOf(item) + 1) / cards.Count;
-                Consoler.Output(string.Format("Total {0:P1} complete\n 4.Getting card legacy: {1:P1}", 0.6 + 0.2 * per, per));
-
-                Card card = GetCard(item);
-                result.Add(card);
-            }
-
-            return result;
+            return GetLegality(card);
         }
     }
 }

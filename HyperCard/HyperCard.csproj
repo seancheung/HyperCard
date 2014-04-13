@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Configs.cs" />
     <Compile Include="Classes\Langs.cs" />
+    <Compile Include="Styles\ListViewConverter.cs" />
     <Compile Include="Styles\StarWidthConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\CONVERTER\CONVERTER.csproj">
       <Project>{70c45baa-6cc6-4197-a0b0-d6a0f8715196}</Project>
       <Name>CONVERTER</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FORMATTER\FORMATTER.csproj">
+      <Project>{cd1509ba-ac5b-49b1-9639-6b971f515b57}</Project>
+      <Name>FORMATTER</Name>
     </ProjectReference>
     <ProjectReference Include="..\MODEL\MODEL.csproj">
       <Project>{39065bba-cd3d-45f4-8d09-c3cdb4d85252}</Project>
