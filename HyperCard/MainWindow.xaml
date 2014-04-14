@@ -19,6 +19,8 @@
                 <ResourceDictionary Source="Styles/SimpleScrollViewer.xaml"/>
                 <ResourceDictionary Source="Styles/DataItemCheckListbox.xaml"/>
                 <ResourceDictionary Source="Styles/ExListView.xaml"/>
+                <ResourceDictionary Source="Styles/MetroComboBox.xaml"/>
+                <ResourceDictionary Source="Styles/ProgressBarStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <style:StarWidthConverter x:Key="StarWidthConverter"/>
             <style:ListViewConverter x:Key="ListViewConverter"/>
@@ -26,8 +28,9 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="92*"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -40,7 +43,7 @@
             <Button Name="Max" Style="{StaticResource ButtonMax}" Canvas.Right="45" Canvas.Top="10" Width="25" Height="25"/>
             <Button Name="Min" Style="{StaticResource ButtonMin}" Canvas.Right="75" Canvas.Top="10" Width="25" Height="25"/>
         </Canvas>
-        <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0" Background="Transparent">
+        <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0" Background="Transparent" Grid.RowSpan="2">
             <TabItem Header="Filter" IsTabStop="False">
             </TabItem>
             <TabItem Header="Card List" IsTabStop="False" IsSelected="True">
@@ -71,48 +74,36 @@
                     <TabItem Header=" ">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Vertical">
-                                <Button Name="btn_REFRESH" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="REFRESH" Click="Button_REFRESH"/>
-                                <Button Name="btn_UPDATE" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="UPDATE SELECTED"/>
-                                <Button Name="btn_IMAGES" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="DOWNLOAD IMAGES"/>
+                                <Button Name="btn_REFRESH" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="REFRESH" Click="btn_REFRESH_Click"/>
+                                <Button Name="btn_UPDATE" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="UPDATE" Click="btn_UPDATE_Click"/>
+                                <ComboBox IsReadOnly="True" HorizontalContentAlignment="Stretch">
+                                    <ComboBox.Background>
+                                        <VisualBrush Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock Text="DOWNLOAD IMAGES" FontSize="15" Foreground="{StaticResource Color_A}"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </ComboBox.Background>
+                                    <Button Name="btn_IMAGES_GATHERER" Style="{StaticResource ButtonMetro}" Margin="2" Content="GATHERER"/>
+                                    <Button Name="btn_IMAGES_MAGICCARDS" Style="{StaticResource ButtonMetro}" Margin="2" Content="MAGICCARDS" />
+                                    <Button Name="btn_IMAGES_IPLAYMTG" Style="{StaticResource ButtonMetro}" Margin="2" Content="IPLAYMTG" />
+                                </ComboBox>
                                 <Button Name="btn_RESTORE" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="RESTORE"/>
+                                <TextBlock Name="progresstext" Foreground="{StaticResource Color_A}" TextAlignment="Center" Text="Satus" Visibility="Collapsed"/>
+                                <ProgressBar Name="progressbar" Style="{StaticResource AnimProgressBar}" BorderThickness="0" Margin="2" Visibility="Collapsed"/>
                             </StackPanel>
-                            <ListBox Grid.Row="1" Name="updatesets" Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
+                            <ListBox Grid.Row="1" Name="availablesets" Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
+                            <Canvas Grid.Row="2" Background="{StaticResource Color_B}"/>
                         </Grid>
                     </TabItem>
                 </TabControl>
             </TabItem>
         </TabControl>
-        <Border Grid.Column="3" Grid.Row="1" BorderBrush="{StaticResource Color_A1}" BorderThickness="0">
-            <TabControl Name="detailstab" Style="{StaticResource ExTabControl}"
-                        BorderThickness="0" Background="Transparent" TabStripPlacement="Bottom" >
-                <TabItem Header=" ">
-                    <ScrollViewer>
-                        <TextBlock Name="textfield" Foreground="Black" Text="{Binding Text}" TextWrapping="Wrap"/>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem IsSelected="True" Header=" ">
-                    <ScrollViewer>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
-                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
-                        </Grid>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header=" " >
-                    <ScrollViewer>
-                        <TextBlock Foreground="Black" Text="{Binding Rulings}" TextWrapping="Wrap"/>
-                    </ScrollViewer>
-                </TabItem>
-            </TabControl>
-        </Border>
         <ListView Name="mainboard" Grid.Column="1" Grid.Row="1" Margin="0,0,0,4"
                   BorderBrush="{StaticResource Color_A}" BorderThickness="0.4"  
                   ItemContainerStyle="{StaticResource ExItemContainerStyle}"
@@ -209,5 +200,34 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Canvas Grid.Column="1" Grid.Row="2" Background="{StaticResource Color_B}"/>
+        <Canvas Grid.Column="2" Grid.Row="2" Background="{StaticResource Color_B}"/>
+        <Border Grid.Column="3" Grid.Row="1" BorderBrush="{StaticResource Color_A1}" BorderThickness="0" Grid.RowSpan="2">
+            <TabControl Name="detailstab" Style="{StaticResource ExTabControl}"
+                        BorderThickness="0" Background="Transparent" TabStripPlacement="Bottom" >
+                <TabItem Header=" ">
+                    <ScrollViewer>
+                        <TextBlock Name="textfield" Foreground="Black" Text="{Binding Text}" TextWrapping="Wrap"/>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem IsSelected="True" Header=" ">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
+                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header=" " >
+                    <ScrollViewer>
+                        <TextBlock Foreground="Black" Text="{Binding Rulings}" TextWrapping="Wrap"/>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
     </Grid>
 </Window>

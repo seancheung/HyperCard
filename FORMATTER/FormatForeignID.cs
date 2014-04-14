@@ -17,7 +17,7 @@ namespace FORMATTER
         private static Card GetzID(Card card, LANGUAGE lang)
         {
             string webdata = Request.GetWebData(GetURL(card.ID));
-            if (!webdata.Contains("This card is available in the following languages:") || !webdata.Contains(lang.ToString().Replace("_", " ")))
+            if (lang == LANGUAGE.English || !webdata.Contains("This card is available in the following languages:") || !webdata.Contains(lang.ToString().Replace("_", " ")))
             {
                 card.zID = string.Empty;
 

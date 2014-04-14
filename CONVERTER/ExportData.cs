@@ -1,7 +1,7 @@
 ﻿using MODEL;
-using System.Xml;
+using System.Collections.Generic;
 using System.IO;
-using System;
+using System.Xml;
 
 namespace CONVERTER
 {
@@ -12,7 +12,7 @@ namespace CONVERTER
         /// </summary>
         /// <param name="cards">Cards that are fully filled</param>
         /// <param name="filepath">File saving path</param>
-        public void Export(System.Collections.Generic.List<Card> cards, string filepath)
+        public void Export(List<Card> cards, string filepath)
         {
             if (!File.Exists(filepath))
             {

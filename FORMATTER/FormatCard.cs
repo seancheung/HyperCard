@@ -14,7 +14,7 @@ namespace FORMATTER
         /// <param name="setcode">Setcode in capital</param>
         /// <param name="lang">Additional Language</param>
         /// <returns>A list of cards with id, NULL is returned if set not found</returns>
-        public static List<Card> GetIds(string setname, string setcode, LANGUAGE lang = LANGUAGE.Chinese_Simplified)
+        public static List<Card> GetIds(string setname, string setcode, LANGUAGE lang = LANGUAGE.English)
         {
             return FormatID.GetCards(setname, setcode);
         }
@@ -25,7 +25,7 @@ namespace FORMATTER
         /// <param name="card">A card with ID</param>
         /// <param name="lang">Additional Language</param>
         /// <returns>A fully formatted card, if not found, NULL is returned(Please remove)</returns>
-        public static Card GetCard(Card card, LANGUAGE lang = LANGUAGE.Chinese_Simplified)
+        public static Card GetCard(Card card, LANGUAGE lang = LANGUAGE.English)
         {
             card = FormatDetail.GetCard(card);
             if (card != null)
