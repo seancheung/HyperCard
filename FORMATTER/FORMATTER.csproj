@@ -45,6 +45,7 @@
     <Compile Include="FormatForeignDetail.cs" />
     <Compile Include="FormatForeignID.cs" />
     <Compile Include="FormatID.cs" />
+    <Compile Include="FormatImage.cs" />
     <Compile Include="FormatLegality.cs" />
     <Compile Include="FormatLegalityList.cs" />
     <Compile Include="FormatSets.cs" />

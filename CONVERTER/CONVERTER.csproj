@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\MODEL\DLLs\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,11 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compressor.cs" />
     <Compile Include="ExportData.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FORMATTER\FORMATTER.csproj">
+      <Project>{cd1509ba-ac5b-49b1-9639-6b971f515b57}</Project>
+      <Name>FORMATTER</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MODEL\MODEL.csproj">
       <Project>{39065bba-cd3d-45f4-8d09-c3cdb4d85252}</Project>
       <Name>MODEL</Name>

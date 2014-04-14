@@ -89,9 +89,9 @@
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </ComboBox.Background>
-                                    <Button Name="btn_IMAGES_GATHERER" Style="{StaticResource ButtonMetro}" Margin="2" Content="GATHERER"/>
-                                    <Button Name="btn_IMAGES_MAGICCARDS" Style="{StaticResource ButtonMetro}" Margin="2" Content="MAGICCARDS" />
-                                    <Button Name="btn_IMAGES_IPLAYMTG" Style="{StaticResource ButtonMetro}" Margin="2" Content="IPLAYMTG" />
+                                    <Button Name="btn_IMAGES_GATHERER" Style="{StaticResource ButtonMetro}" Margin="2" Content="GATHERER" Click="btn_IMAGES_Click"/>
+                                    <Button Name="btn_IMAGES_MAGICCARDS" Style="{StaticResource ButtonMetro}" Margin="2" Content="MAGICCARDS" Click="btn_IMAGES_Click"/>
+                                    <Button Name="btn_IMAGES_IPLAYMTG" Style="{StaticResource ButtonMetro}" Margin="2" Content="IPLAYMTG" Click="btn_IMAGES_Click"/>
                                 </ComboBox>
                                 <Button Name="btn_RESTORE" Style="{StaticResource ButtonMetro}" Margin="2" Height="20" Content="RESTORE"/>
                                 <TextBlock Name="progresstext" Foreground="{StaticResource Color_A}" TextAlignment="Center" Text="Satus" Visibility="Collapsed"/>

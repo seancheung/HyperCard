@@ -188,7 +188,7 @@ namespace HyperCard
                         Dispatcher.BeginInvoke((Action)delegate
                         {
                             //Set ProgressText
-                            progresstext.Text = string.Format("Bengin {0}", set);
+                            progresstext.Text = string.Format("Benginning {0}", set);
                         });
 
                         //Get Card Id List
@@ -208,7 +208,7 @@ namespace HyperCard
                             Dispatcher.BeginInvoke((Action)delegate
                             {
                                 //Set ProgressText
-                                progresstext.Text = string.Format("Format Card {0}", cards[i].ID);
+                                progresstext.Text = string.Format("Formatting Card {0}", cards[i].ID);
                             });
 
                             //Get Card Properties
@@ -270,6 +270,73 @@ namespace HyperCard
             btn_UPDATE.IsEnabled = p;
             progressbar.Visibility = p ? Visibility.Collapsed : Visibility.Visible;
             progresstext.Visibility = p ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void btn_IMAGES_Click(object sender, RoutedEventArgs e)
+        {
+            Website site = Website.gatherer;
+
+            switch ((sender as Button).Content.ToString())
+            {
+                case "GATHERER":
+                    break;
+                case "MAGICCARDS": site = Website.magiccards;
+                    break;
+                case "IPLAYMTG": site = Website.iplaymtg;
+                    break;
+                default:
+                    break;
+            }
+
+            List<string> updatesets = new List<string>();
+            //Get all checked sets
+            foreach (ListBoxItem item in availablesets.Items)
+            {
+                if (item.IsSelected)
+                {
+                    updatesets.Add(item.Content.ToString().Remove(item.Content.ToString().IndexOf("(")));
+                }
+            }
+            if (updatesets.Count == 0) return;
+
+            EnableButtons(false);
+
+            tddownload = new Thread(delegate()
+            {
+                var pcards = cards.Where(c => updatesets.Contains(c.Set)).ToList();
+
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    //Set ProgressBar
+                    progressbar.Value = 0;
+                    progressbar.Maximum = pcards.Count;
+                });
+
+                for (int i = 0; i < pcards.Count; i++)
+                {
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        //Set ProgressText
+                        progresstext.Text = string.Format("Downloading Card {0}", pcards[i].ID);
+                    });
+
+                    CONVERTER.Compressor.Zip(pcards[i]);
+
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        //Set ProgressBar
+                        progressbar.Value = i;
+                    });
+                }
+
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    EnableButtons(true);
+                });
+
+            });
+
+            tddownload.Start();
         }
 
     }

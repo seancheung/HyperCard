@@ -84,6 +84,7 @@ namespace CONVERTER
                 }
                 catch (Exception ex)
                 {
+                    LoggerError.Log(ex.Message);
                     break;
                 }
             }
