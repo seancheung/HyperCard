@@ -46,6 +46,8 @@ namespace CONVERTER
                 card.Artist = xmlNode.Attributes["artist"].Value.ToString();
                 card.Number = xmlNode.Attributes["number"].Value.ToString();
                 card.Rulings = xmlNode.Attributes["rulings"].Value.ToString();
+                card.Rating = xmlNode.Attributes["rating"].Value.ToString();
+                card.Legality = xmlNode.Attributes["legality"].Value.ToString();
                 card.cPic = new List<string>();
                 card.cPic = GetManaIcon(card);
                 card.tPic = new List<string>();

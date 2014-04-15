@@ -24,6 +24,8 @@
             </ResourceDictionary.MergedDictionaries>
             <style:StarWidthConverter x:Key="StarWidthConverter"/>
             <style:ListViewConverter x:Key="ListViewConverter"/>
+            <style:ImageConverter x:Key="ImgConverter"/>
+            <style:ImageConverterB x:Key="ImgConverterB"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -217,8 +219,8 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
-                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding ID, IsAsync=True}"/>
+                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverter}, IsAsync=True}"/>
+                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverterB}, IsAsync=True}"/>
                         </Grid>
                     </ScrollViewer>
                 </TabItem>

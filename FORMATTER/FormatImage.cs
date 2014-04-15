@@ -6,6 +6,7 @@ namespace FORMATTER
 {
     public class FormatImage
     {
+        
         /// <summary>
         /// 
         /// </summary>

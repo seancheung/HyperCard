@@ -59,7 +59,7 @@ namespace CONVERTER
 
             using (ZipFile zipFile = ZipFile.Read(zipPath))
             {
-                if (!zipFile.ContainsEntry(string.Format("{0}.jpg", ids[0])))
+                if (!zipFile.ContainsEntry(string.Format("{0}.jpg", ids[0])) || (ids[1] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[1]))))
                 {
                     if (!NetworkInterface.GetIsNetworkAvailable())
                     {
@@ -82,18 +82,21 @@ namespace CONVERTER
                         LoggerError.Log(ex.Message);
                     }
                 }
-                try
+                else
                 {
-                    for (int i = 0; i < 2; i++)
+                    try
                     {
-                        if (ids[i] != string.Empty)
-                            zipFile[ids[i] + ".jpg"].Extract(TempPath, ExtractExistingFileAction.DoNotOverwrite);
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (ids[i] != string.Empty)
+                                zipFile[ids[i] + ".jpg"].Extract(TempPath, ExtractExistingFileAction.DoNotOverwrite);
+                        }
                     }
-                }
 
-                catch (System.Exception ex)
-                {
-                    LoggerError.Log(ex.Message);
+                    catch (System.Exception ex)
+                    {
+                        LoggerError.Log(ex.Message);
+                    }
                 }
             }
         }
@@ -202,6 +205,32 @@ namespace CONVERTER
             {
                 LoggerError.Log(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="lang"></param>
+        /// <param name="isFront"></param>
+        /// <returns></returns>
+        public static string GetImagePath(Card card, LANGUAGE lang, bool isFront = true)
+        {
+            string uri = null;
+
+            string id = lang == LANGUAGE.English || card.zID == string.Empty ? card.ID : card.zID;
+
+            Unzip(card, lang);
+
+            if (id.Contains("|"))
+                if (isFront) id = id.Remove(id.IndexOf("|"));
+                else id = id.Substring(id.IndexOf("|") + 1);
+            if (isFront) 
+                uri = string.Format("{0}{1}.jpg", TempPath, id);
+            else
+                uri = @"\Resources\frame_back.jpg";
+
+            return uri;
         }
     }
 }

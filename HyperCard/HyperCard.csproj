@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Configs.cs" />
     <Compile Include="Classes\Langs.cs" />
+    <Compile Include="Styles\ImageConverter.cs" />
     <Compile Include="Styles\ListViewConverter.cs" />
     <Compile Include="Styles\StarWidthConverter.cs" />
     <Page Include="MainWindow.xaml">
@@ -210,6 +211,9 @@
     <Resource Include="Resources\type_m.png" />
     <Resource Include="Resources\type_p.png" />
     <Resource Include="Resources\type_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\frame_back.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

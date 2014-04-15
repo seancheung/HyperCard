@@ -11,6 +11,7 @@ using FORMATTER;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 
 namespace HyperCard
 {
@@ -52,8 +53,6 @@ namespace HyperCard
                 GridViewColumn_Name.DisplayMemberBinding = displayMemberBinding;
                 GridViewColum_NameMain.DisplayMemberBinding = displayMemberBinding;
                 GridViewColum_NameSide.DisplayMemberBinding = displayMemberBinding;
-                imgfront.SetBinding(Image.SourceProperty, "zID");
-                imgback.SetBinding(Image.SourceProperty, "zID");
                 textfield.SetBinding(TextBlock.TextProperty, "zText");
             }
 
@@ -97,6 +96,7 @@ namespace HyperCard
             //    deckmain.AddEx(new Deck(cards[i]));
             //    deckside.AddEx(new Deck(cards[999 - i]));
             //}
+            
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
@@ -109,6 +109,7 @@ namespace HyperCard
         {
             //Binding current selected item to detailstab
             detailstab.DataContext = (sender as ListView).ItemsSource;
+            
         }
 
         private void btn_REFRESH_Click(object sender, RoutedEventArgs e)
