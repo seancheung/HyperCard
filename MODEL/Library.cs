@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MODEL
 {
@@ -28,11 +29,11 @@ namespace MODEL
                     }
                     else
                     {
-                        this.sideboard.Add(current);
+                        sideboard.Add(current);
                     }
                 }
             }
-            this.Shuffle();
+            Shuffle();
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace MODEL
                 cards.Add(base.Pop());
             }
 
-            System.Random random = new System.Random();
+            Random random = new Random();
 
             //pick a random card from the unshuffled cards
             //swap it with the bottom card of the unshuffled

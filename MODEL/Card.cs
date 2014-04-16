@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Collections.Generic;
 namespace MODEL
 {
     /// <summary>
@@ -189,15 +191,390 @@ namespace MODEL
         /// </summary>
         public string Rating { get; set; }
 
-        public System.Collections.Generic.List<string> cPic
+        /// <summary>
+        /// Mana symbol paths
+        /// </summary>
+        public List<string> cPic
         {
-            get;
-            set;
+            get
+            {
+                List<string> paths = new List<string>();
+                char[] separator = new char[] { '{', '}' };
+                string[] array = new string[] { "" };
+                array = Cost.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < array.Length; i++)
+                {
+                    string mana = array[i];
+                    if (mana != "|")
+                        paths.Add(String.Format("/Resources/mana_{0}.png", mana.ToLower()));
+                    else
+                        paths.Add("/Resources/mana_sep.png");
+                }
+
+                return paths;
+            }
         }
-        public System.Collections.Generic.List<string> tPic
+
+        /// <summary>
+        /// Type icon paths
+        /// </summary>
+        public List<string> tPic
         {
-            get;
-            set;
+            get
+            {
+                List<string> paths = new List<string>();
+                foreach (var t in TypeCode)
+                {
+                    paths.Add(string.Format("/Resources/type_{0}.png", t.ToString().ToLower()));
+                }
+                return paths;
+            }
+
         }
+
+        /// <summary>
+        /// Get split IDs
+        /// </summary>
+        public string[] IDs
+        {
+            get
+            {
+                if (!ID.Contains("|"))
+                    return new string[] { ID };
+                else
+                {
+                    return new string[]
+                    {
+                        ID.Remove(ID.IndexOf("|")),
+                        ID.Substring(ID.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split zIDs
+        /// </summary>
+        public string[] zIDs
+        {
+            get
+            {
+                if (!zID.Contains("|"))
+                    return new string[] { zID };
+                else
+                {
+                    return new string[]
+                    {
+                        zID.Remove(zID.IndexOf("|")),
+                        zID.Substring(zID.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Names
+        /// </summary>
+        public string[] Names
+        {
+            get
+            {
+                if (!Name.Contains("|"))
+                    return new string[] { Name };
+                else
+                {
+                    return new string[]
+                    {
+                        Name.Remove(Name.IndexOf("|")),
+                        Name.Substring(Name.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split zNames
+        /// </summary>
+        public string[] zNames
+        {
+            get
+            {
+                if (!zName.Contains("|"))
+                    return new string[] { zName };
+                else
+                {
+                    return new string[]
+                    {
+                        zName.Remove(zName.IndexOf("|")),
+                        zName.Substring(zName.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Colors
+        /// </summary>
+        public string[] Colors
+        {
+            get
+            {
+                if (!Color.Contains("|"))
+                    return new string[] { Color };
+                else
+                {
+                    return new string[]
+                    {
+                        Color.Remove(Color.IndexOf("|")),
+                        Color.Substring(Color.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Costs
+        /// </summary>
+        public string[] Costs
+        {
+            get
+            {
+                if (!Cost.Contains("|"))
+                    return new string[] { Cost };
+                else
+                {
+                    return new string[]
+                    {
+                        Cost.Remove(Cost.IndexOf("|")),
+                        Cost.Substring(Cost.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Types
+        /// </summary>
+        public string[] Types
+        {
+            get
+            {
+                if (!Type.Contains("|"))
+                    return new string[] { Type };
+                else
+                {
+                    return new string[]
+                    {
+                        Type.Remove(Type.IndexOf("|")),
+                        Type.Substring(Type.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split zTypes
+        /// </summary>
+        public string[] zTypes
+        {
+            get
+            {
+                if (!zType.Contains("|"))
+                    return new string[] { zType };
+                else
+                {
+                    return new string[]
+                    {
+                        zType.Remove(zType.IndexOf("|")),
+                        zType.Substring(zType.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Powers
+        /// </summary>
+        public string[] Pows
+        {
+            get
+            {
+                if (!Pow.Contains("|"))
+                    return new string[] { Pow };
+                else
+                {
+                    return new string[]
+                    {
+                        Pow.Remove(Pow.IndexOf("|")),
+                        Pow.Substring(Pow.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Toughnesses
+        /// </summary>
+        public string[] Tghs
+        {
+            get
+            {
+                if (!Tgh.Contains("|"))
+                    return new string[] { Tgh };
+                else
+                {
+                    return new string[]
+                    {
+                        Tgh.Remove(Tgh.IndexOf("|")),
+                        Tgh.Substring(Tgh.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Texts
+        /// </summary>
+        public string[] Texts
+        {
+            get
+            {
+                if (!Text.Contains("|"))
+                    return new string[] { Text };
+                else
+                {
+                    return new string[]
+                    {
+                        Text.Remove(Text.IndexOf("|")),
+                        Text.Substring(Text.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split zTexts
+        /// </summary>
+        public string[] zTexts
+        {
+            get
+            {
+                if (!zText.Contains("|"))
+                    return new string[] { zText };
+                else
+                {
+                    return new string[]
+                    {
+                        zText.Remove(zText.IndexOf("|")),
+                        zText.Substring(zText.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Flavors
+        /// </summary>
+        public string[] Flavors
+        {
+            get
+            {
+                if (!Flavor.Contains("|"))
+                    return new string[] { Flavor };
+                else
+                {
+                    return new string[]
+                    {
+                        Flavor.Remove(Flavor.IndexOf("|")),
+                        Flavor.Substring(Flavor.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split zFlavors
+        /// </summary>
+        public string[] zFlavors
+        {
+            get
+            {
+                if (!zFlavor.Contains("|"))
+                    return new string[] { zFlavor };
+                else
+                {
+                    return new string[]
+                    {
+                        zFlavor.Remove(zFlavor.IndexOf("|")),
+                        zFlavor.Substring(zFlavor.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Rarities
+        /// </summary>
+        public string[] Rarities
+        {
+            get
+            {
+                if (!Rarity.Contains("|"))
+                    return new string[] { Rarity };
+                else
+                {
+                    return new string[]
+                    {
+                        Rarity.Remove(Rarity.IndexOf("|")),
+                        Rarity.Substring(Rarity.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Numbers
+        /// </summary>
+        public string[] Numbers
+        {
+            get
+            {
+                if (!Number.Contains("|"))
+                    return new string[] { Number };
+                else
+                {
+                    return new string[]
+                    {
+                        Number.Remove(Number.IndexOf("|")),
+                        Number.Substring(Number.IndexOf("|") + 1)
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get split Variations
+        /// </summary>
+        public string[] Vars
+        {
+            get
+            {
+                if (!Var.Contains(":"))
+                    return new string[] { Var };
+                else
+                {
+                    string[] array = Var.Split(new char[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    return new string[]
+                    {
+                        array[0].Substring(2),
+                        array[1].Substring(2),
+                        array[2].Substring(2),
+                        array[3].Substring(2),
+                    };
+                }
+            }
+        }
+
     }
 }

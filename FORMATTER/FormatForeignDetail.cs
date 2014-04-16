@@ -76,7 +76,9 @@ namespace FORMATTER
                 {
                     int num9 = card.zText.IndexOf("<");
                     int num10 = card.zText.IndexOf(">");
-                    card.zText = card.zText.Remove(num9, num10 - num9 + 1).Trim();
+                    if (num10 < num9) card.zText = card.zText.Remove(num9, 1);
+                    else
+                        card.zText = card.zText.Remove(num9, num10 - num9 + 1).Trim();
                 }
             }
             else

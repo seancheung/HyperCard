@@ -38,8 +38,8 @@ namespace MODEL
         /// </summary>
         public Format()
         {
-            this.LegalSets = new List<string>();
-            this.BannedCards = new List<string>();
+            LegalSets = new List<string>();
+            BannedCards = new List<string>();
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace MODEL
         /// <param name="cards">Banned cards</param>
         public Format(FORMAT format, List<string> sets, List<string> cards)
         {
-            this.LegalSets = new List<string>();
-            this.BannedCards = new List<string>();
-            this.FormatName = format;
-            this.LegalSets = sets;
-            this.BannedCards = cards;
+            LegalSets = new List<string>();
+            BannedCards = new List<string>();
+            FormatName = format;
+            LegalSets = sets;
+            BannedCards = cards;
         }
     }
 }

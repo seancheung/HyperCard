@@ -1,9 +1,7 @@
 ﻿using MODEL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Xml;
 
 namespace CONVERTER
@@ -48,13 +46,13 @@ namespace CONVERTER
                 card.Rulings = xmlNode.Attributes["rulings"].Value.ToString();
                 card.Rating = xmlNode.Attributes["rating"].Value.ToString();
                 card.Legality = xmlNode.Attributes["legality"].Value.ToString();
-                card.cPic = new List<string>();
-                card.cPic = GetManaIcon(card);
-                card.tPic = new List<string>();
-                foreach (var t in card.TypeCode)
-                {
-                    card.tPic.Add(string.Format("/Resources/type_{0}.png", t.ToString().ToLower()));
-                }
+                //card.cPic = new List<string>();
+                //card.cPic = GetManaIcon(card);
+                //card.tPic = new List<string>();
+                //foreach (var t in card.TypeCode)
+                //{
+                //    card.tPic.Add(string.Format("/Resources/type_{0}.png", t.ToString().ToLower()));
+                //}
                 list.Add(card);
             }
             return list;
@@ -92,5 +90,26 @@ namespace CONVERTER
             }
             return list;
         }
+
+        //public List<Deck> Open(FileType filetype, FileStream fs, List<Card> database)
+        //{
+
+        //}
+
+        //private List<Deck> Open_VPT(FileStream fs, List<Card> database)
+        //{
+        //}
+
+        //private List<Deck> Open_MWS(FileStream fs, List<Card> database)
+        //{
+        //}
+
+        //private List<Deck> Open_MAGE(FileStream fs, List<Card> database)
+        //{
+        //}
+
+        //private List<Deck> Open_MO(FileStream fs, List<Card> database)
+        //{
+        //}
     }
 }

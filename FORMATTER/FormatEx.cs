@@ -182,7 +182,7 @@ namespace FORMATTER
                 }
                 card.CMC = "0";
             }
-            if (card.Type.Contains("Plane"))
+            if (card.Type.Contains("Plane") && !card.Type.Contains("Planeswalker"))
             {
                 card.TypeCode += "N";
             }

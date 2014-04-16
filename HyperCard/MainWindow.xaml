@@ -26,6 +26,7 @@
             <style:ListViewConverter x:Key="ListViewConverter"/>
             <style:ImageConverter x:Key="ImgConverter"/>
             <style:ImageConverterB x:Key="ImgConverterB"/>
+            <style:NameConverter x:Key="NameConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -55,7 +56,14 @@
                           SelectionChanged="listview_SelectionChanged" IsTabStop="False">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyleEx}">
-                            <GridViewColumn x:Name="GridViewColumn_Name" Header="Name" Width="130" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn x:Name="GridViewColumn_Name" Header="Name" Width="130">
+                                <GridViewColumn.DisplayMemberBinding>
+                                    <MultiBinding Converter="{StaticResource NameConverter}">
+                                        <Binding Path="Name"/>
+                                        <Binding Path="zName"/>
+                                    </MultiBinding>
+                                </GridViewColumn.DisplayMemberBinding>
+                            </GridViewColumn>
                             <GridViewColumn x:Name="GridViewColumn_Cost" Header="Cost" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" CellTemplate="{StaticResource CostHeader}" />
                         </GridView>
                     </ListView.View>
@@ -132,7 +140,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GridViewColum_NameMain" Width="110" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn x:Name="GridViewColum_NameMain" Width="110" Header="Name">
+                        <GridViewColumn.DisplayMemberBinding>
+                            <MultiBinding Converter="{StaticResource NameConverter}">
+                                <Binding Path="Name"/>
+                                <Binding Path="zName"/>
+                            </MultiBinding>
+                        </GridViewColumn.DisplayMemberBinding>
+                    </GridViewColumn>
                     <GridViewColumn x:Name="GridViewColum_CostMain" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" Header="Cost">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -180,7 +195,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GridViewColum_NameSide" Width="110" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn x:Name="GridViewColum_NameSide" Width="110" Header="Name">
+                        <GridViewColumn.DisplayMemberBinding>
+                            <MultiBinding Converter="{StaticResource NameConverter}">
+                                <Binding Path="Name"/>
+                                <Binding Path="zName"/>
+                            </MultiBinding>
+                        </GridViewColumn.DisplayMemberBinding>
+                    </GridViewColumn>
                     <GridViewColumn x:Name="GridViewColum_CostSide" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" Header="Cost">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

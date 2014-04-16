@@ -47,7 +47,9 @@ namespace MODEL
                 for (int i = 0; i < properties.Length; i++)
                 {
                     PropertyInfo propertyInfo = properties[i];
-                    propertyInfo.SetValue(this, typeof(Card).GetProperty(propertyInfo.Name).GetValue(card, null), null);
+                    //Make sure the property has a setter
+                    if (propertyInfo.CanWrite)
+                        propertyInfo.SetValue(this, typeof(Card).GetProperty(propertyInfo.Name).GetValue(card, null), null);
                 }
             }
         }

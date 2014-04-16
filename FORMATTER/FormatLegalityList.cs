@@ -2,13 +2,10 @@
 using MODEL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FORMATTER
 {
-    internal class FormatLegalityList
+    public class FormatLegalityList
     {
         private FormatLegalityList() { }
 

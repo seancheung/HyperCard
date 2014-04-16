@@ -1,17 +1,15 @@
-﻿using MODEL;
+﻿using FORMATTER;
+using MODEL;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using FORMATTER;
-using System.Windows.Media;
 using System.Windows.Data;
-using System.Collections.Generic;
-using System.Windows.Media.Imaging;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace HyperCard
 {
@@ -49,10 +47,13 @@ namespace HyperCard
             //Match language setting with data binding
             if (lang != LANGUAGE.English)
             {
-                Binding displayMemberBinding = new Binding("zName");
-                GridViewColumn_Name.DisplayMemberBinding = displayMemberBinding;
-                GridViewColum_NameMain.DisplayMemberBinding = displayMemberBinding;
-                GridViewColum_NameSide.DisplayMemberBinding = displayMemberBinding;
+                MultiBinding mb = new MultiBinding();
+                mb.Bindings.Add(new Binding("zName"));
+                mb.Bindings.Add(new Binding("Name"));
+                mb.Converter = new Styles.NameConverter();
+                GridViewColumn_Name.DisplayMemberBinding = mb;
+                GridViewColum_NameMain.DisplayMemberBinding = mb;
+                GridViewColum_NameSide.DisplayMemberBinding = mb;
                 textfield.SetBinding(TextBlock.TextProperty, "zText");
             }
 
@@ -91,12 +92,12 @@ namespace HyperCard
                 });
             }
 
-            //for (int i = 0; i < 1000; i++)
-            //{
-            //    deckmain.AddEx(new Deck(cards[i]));
-            //    deckside.AddEx(new Deck(cards[999 - i]));
-            //}
-            
+            for (int i = 0; i < 1000; i++)
+            {
+                deckmain.AddEx(new Deck(cards[i]));
+                deckside.AddEx(new Deck(cards[999 - i]));
+            }
+
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
@@ -109,7 +110,7 @@ namespace HyperCard
         {
             //Binding current selected item to detailstab
             detailstab.DataContext = (sender as ListView).ItemsSource;
-            
+
         }
 
         private void btn_REFRESH_Click(object sender, RoutedEventArgs e)

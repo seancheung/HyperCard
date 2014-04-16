@@ -223,12 +223,38 @@ namespace CONVERTER
             Unzip(card, lang);
 
             if (id.Contains("|"))
-                if (isFront) id = id.Remove(id.IndexOf("|"));
-                else id = id.Substring(id.IndexOf("|") + 1);
-            if (isFront) 
+            {
+                if (isFront)
+                {
+                    id = id.Remove(id.IndexOf("|"));
+                }
+                else
+                {
+                    id = id.Substring(id.IndexOf("|") + 1);
+                }
+
                 uri = string.Format("{0}{1}.jpg", TempPath, id);
+            }
             else
-                uri = @"\Resources\frame_back.jpg";
+            {
+                if (!isFront)
+                {
+                    uri = @"\Resources\frame_back.jpg";
+                }
+                else
+                {
+                    uri = string.Format("{0}{1}.jpg", TempPath, id);
+                }
+                
+            }
+
+            //if (id.Contains("|"))
+            //    if (isFront) id = id.Remove(id.IndexOf("|"));
+            //    else id = id.Substring(id.IndexOf("|") + 1);
+            //if (isFront) 
+            //    uri = string.Format("{0}{1}.jpg", TempPath, id);
+            //else
+            //    uri = @"\Resources\frame_back.jpg";
 
             return uri;
         }

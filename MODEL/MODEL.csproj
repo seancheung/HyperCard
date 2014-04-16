@@ -47,8 +47,9 @@
     <Compile Include="Consoler.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="DeckList.cs" />
-    <Compile Include="Format.cs" />
-    <Compile Include="FormatList.cs" />
+    <Compile Include="FileType.cs" />
+    <Compile Include="FORMAT.cs" />
+    <Compile Include="FormatClass.cs" />
     <Compile Include="LANGUAGE.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="LoggerError.cs" />

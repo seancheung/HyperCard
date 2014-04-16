@@ -58,9 +58,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Configs.cs" />
+    <Compile Include="Classes\ImgCard.cs" />
     <Compile Include="Classes\Langs.cs" />
     <Compile Include="Styles\ImageConverter.cs" />
     <Compile Include="Styles\ListViewConverter.cs" />
+    <Compile Include="Styles\NameConverter.cs" />
     <Compile Include="Styles\StarWidthConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
