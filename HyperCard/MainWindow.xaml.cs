@@ -92,11 +92,11 @@ namespace HyperCard
                 });
             }
 
-            for (int i = 0; i < 1000; i++)
-            {
-                deckmain.AddEx(new Deck(cards[i]));
-                deckside.AddEx(new Deck(cards[999 - i]));
-            }
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    deckmain.AddEx(new Deck(cards[i]));
+            //    deckside.AddEx(new Deck(cards[999 - i]));
+            //}
 
         }
 
