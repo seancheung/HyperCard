@@ -42,9 +42,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Canvas Grid.ColumnSpan="4" Background="{StaticResource Color_A}">
-            <Button Name="Close" Style="{StaticResource ButtonClose}" Canvas.Right="15" Canvas.Top="10" Width="25" Height="25"/>
-            <Button Name="Max" Style="{StaticResource ButtonMax}" Canvas.Right="45" Canvas.Top="10" Width="25" Height="25"/>
-            <Button Name="Min" Style="{StaticResource ButtonMin}" Canvas.Right="75" Canvas.Top="10" Width="25" Height="25"/>
+            <Button Name="Close" Style="{StaticResource ButtonClose}" Canvas.Right="15" Canvas.Top="10" Width="25" Height="25" Click="Close_Click"/>
+            <Button Name="Max" Style="{StaticResource ButtonMax}" Canvas.Right="45" Canvas.Top="10" Width="25" Height="25" Click="Max_Click"/>
+            <Button Name="Min" Style="{StaticResource ButtonMin}" Canvas.Right="75" Canvas.Top="10" Width="25" Height="25" Click="Min_Click"/>
         </Canvas>
         <TabControl Grid.Row="1" Style="{StaticResource ExTabControl}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0" Background="Transparent" Grid.RowSpan="2">
             <TabItem Header="Filter" IsTabStop="False">

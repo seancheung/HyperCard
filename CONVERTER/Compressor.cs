@@ -32,14 +32,7 @@ namespace CONVERTER
         public static void Unzip(Card card, LANGUAGE lang, Website site = Website.gatherer)
         {
             string zipPath = string.Format("{0}{1}.zip", ImagePath, card.SetCode);
-            string id = lang == LANGUAGE.English || card.zID == string.Empty ? card.ID : card.zID;
-
-            string[] ids = new string[] { id, string.Empty };
-            if (id.Contains("|"))
-            {
-                ids[0] = id.Remove(id.IndexOf("|"));
-                ids[1] = id.Substring(id.IndexOf("|") + 1);
-            }
+            string[] ids = lang == LANGUAGE.English || card.zID == string.Empty ? card.IDs : card.zIDs;
 
             if (!Directory.Exists(TempPath))
             {
@@ -79,7 +72,8 @@ namespace CONVERTER
                     }
                     catch (Exception ex)
                     {
-                        LoggerError.Log(ex.Message);
+
+                        LoggerError.Log(string.Format("Unzip Error:\nIDs:{0}|{1}\nLanguage:{2}\nSite:{3}\nError:{4}", ids[0], ids[1], lang, site.ToString(), ex.Message));
                     }
                 }
                 else
@@ -95,7 +89,7 @@ namespace CONVERTER
 
                     catch (Exception ex)
                     {
-                        LoggerError.Log(ex.Message);
+                        LoggerError.Log(string.Format("Unzip Error:\nIDs:{0}|{1}\nLanguage:{2}\nSite:{3}\nError:{4}", ids[0], ids[1], lang, site.ToString(), ex.Message));
                     }
                 }
             }
@@ -137,7 +131,7 @@ namespace CONVERTER
             }
             catch (Exception ex)
             {
-                LoggerError.Log(ex.Message);
+                LoggerError.Log(string.Format("Zip Error:\nID:{0}SetCode:{1}\nError:{2}", id, setcode, ex.Message));
             }
         }
 
@@ -149,19 +143,9 @@ namespace CONVERTER
         {
             string zipPath = string.Format("{0}{1}.zip", ImagePath, card.SetCode);
 
-            string[] ids = new string[] { card.ID, string.Empty };
-            if (card.ID.Contains("|"))
-            {
-                ids[0] = card.ID.Remove(card.ID.IndexOf("|"));
-                ids[1] = card.ID.Substring(card.ID.IndexOf("|") + 1);
-            }
+            string[] ids = card.IDs;
 
-            string[] zids = new string[] { card.zID, string.Empty };
-            if (card.zID.Contains("|"))
-            {
-                ids[0] = card.zID.Remove(card.zID.IndexOf("|"));
-                ids[1] = card.zID.Substring(card.zID.IndexOf("|") + 1);
-            }
+            string[] zids = card.zIDs;
 
             if (!Directory.Exists(TempPath))
             {
@@ -203,7 +187,7 @@ namespace CONVERTER
             }
             catch (Exception ex)
             {
-                LoggerError.Log(ex.Message);
+                LoggerError.Log(string.Format("Zip Error:\nIDs:{0}|{1}\nzIDs:{2}|{3}\nError:{4}", ids[0], ids[1], zids[0], zids[1], ex.Message));
             }
         }
 
@@ -245,7 +229,7 @@ namespace CONVERTER
                 {
                     uri = string.Format("{0}{1}.jpg", TempPath, id);
                 }
-                
+
             }
 
             //if (id.Contains("|"))

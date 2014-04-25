@@ -279,6 +279,7 @@ namespace FORMATTER
                                 string str = text6.Substring(num33, num34 - num33).Replace("\"", string.Empty).Trim();
                                 text6 = text6.Insert(k, String.Format("{{{0}}}", str));
                             }
+                            //Mark
                             while (text6.Contains("<"))
                             {
                                 int num11 = text6.IndexOf("<");

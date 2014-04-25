@@ -94,6 +94,8 @@ namespace HyperCard
                 });
             }
 
+            //FORMATTER.FormatCard.GetCard("126218", lang);
+
             //try
             //{
             //    for (int i = 0; i < 1000; i++)
@@ -348,6 +350,24 @@ namespace HyperCard
             });
 
             tddownload.Start();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Max_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == System.Windows.WindowState.Maximized)
+                WindowState = System.Windows.WindowState.Normal;
+            else
+                WindowState = System.Windows.WindowState.Maximized;
+        }
+
+        private void Min_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = System.Windows.WindowState.Minimized;
         }
 
     }

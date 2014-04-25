@@ -576,5 +576,33 @@ namespace MODEL
             }
         }
 
+        /// <summary>
+        /// Whether this card is doublefaced
+        /// </summary>
+        public bool IsDoubleFaced
+        {
+            get
+            {
+                if (ID.Contains("|"))
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Whwther this card is split
+        /// </summary>
+        public bool IsSplit
+        {
+            get
+            {
+                if (Cost.Contains("|") && !ID.Contains("|"))
+                    return true;
+                else
+                    return false;
+            }
+        }
+
     }
 }

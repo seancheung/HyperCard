@@ -141,9 +141,9 @@ namespace FORMATTER
             {
                 if (card.issplit)
                 {
-                    int num15 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
-                    int num16 = webdata.IndexOf("</div>", num15);
-                    card.zName = String.Format("{0}|{1}", card.zName, webdata.Substring(num15, num16 - num15).Trim());
+                    //int num15 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
+                    //int num16 = webdata.IndexOf("</div>", num15);
+                    //card.zName = String.Format("{0}", card.zName, webdata.Substring(num15, num16 - num15).Trim());
                     int num17 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Types:")) + 20;
                     int num18 = webdata.IndexOf("</div>", num17);
                     card.zType = String.Format("{0}|{1}", card.zType, webdata.Substring(num17, num18 - num17).Replace("-", string.Empty).Replace(" ", string.Empty).Trim());

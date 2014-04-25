@@ -38,5 +38,16 @@ namespace FORMATTER
 
             return card;
         }
+
+        /// <summary>
+        /// Get a card with all properties filled by id
+        /// </summary>
+        /// <param name="id">A card ID</param>
+        /// <param name="lang">Additional Language</param>
+        /// <returns>A fully formatted card, if not found, NULL is returned</returns>
+        public static Card GetCard(string id, LANGUAGE lang = LANGUAGE.English)
+        {
+            return GetCard(new Card() { ID = id }, lang);
+        }
     }
 }

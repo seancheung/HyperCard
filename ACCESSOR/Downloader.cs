@@ -28,7 +28,7 @@ namespace ACCESSOR
             }
             catch (Exception ex)
             {
-                LoggerError.Log(url + "\n" + path + "\n" + ex.Message);
+                LoggerError.Log("Downloadfile Error URL: " + url + "\nStoring Path: " + path + "\nError Message: " + ex.Message);
                 return false;
             }
         }
