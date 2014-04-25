@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net;
 using MODEL;
+using System;
 
 namespace ACCESSOR
 {
@@ -38,24 +39,23 @@ namespace ACCESSOR
 
                     break;
                 }
-                catch (WebException ex)
+                catch (Exception ex)
                 {
-                    if (ex.Status == WebExceptionStatus.Timeout)
+                    if (ex is WebException && (ex as WebException).Status == WebExceptionStatus.Timeout)
                     {
                         tryCount--;
                     }
                     else
                     {
-                        httpWebResponse = (HttpWebResponse)ex.Response;
-                        LoggerError.Log(ex.Message);
+                        LoggerError.Log(url + "\n" + ex.Message);
                         break;
                     }
                 }
+                finally
+                {
+                    if (httpWebResponse != null) httpWebResponse.Close();
+                }
             }
-
-            
-
-            httpWebResponse.Close();
 
             return data;
 

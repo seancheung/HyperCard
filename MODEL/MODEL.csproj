@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DLLs\log4net.dll" />
+    <None Include="log.hyc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="DLLs\Ionic.Zip.dll" />

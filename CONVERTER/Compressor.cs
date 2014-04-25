@@ -77,7 +77,7 @@ namespace CONVERTER
 
                         zipFile.Save();
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         LoggerError.Log(ex.Message);
                     }
@@ -93,7 +93,7 @@ namespace CONVERTER
                         }
                     }
 
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         LoggerError.Log(ex.Message);
                     }
@@ -135,7 +135,7 @@ namespace CONVERTER
                     zipFile.Save();
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 LoggerError.Log(ex.Message);
             }
@@ -201,7 +201,7 @@ namespace CONVERTER
 
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 LoggerError.Log(ex.Message);
             }

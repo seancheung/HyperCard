@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net" />
+  </configSections>
+
+  <log4net>
+    
+    <root>
+      <level value="ALL" />
+    </root>
+    
+    <appender  name="rollingFile" type="log4net.Appender.RollingFileAppender,log4net" >
+      <param name="File" value="Error.log" />
+      <param name="AppendToFile" value="true" />
+      <param name="RollingStyle" value="Size" />
+      <param name="maxSizeRollBackups" value="10" />
+      <param name="maximumFileSize" value="1024KB" />
+      <param name="StaticLogFileName" value="true" />
+      <layout type="log4net.Layout.PatternLayout,log4net">
+        <param name="ConversionPattern" value="@%d - [ %m ] - [@%r]%n" />
+      </layout>
+    </appender>
+
+    <logger name="App.Error">
+      <level value="Error" />
+      <appender-ref  ref="rollingFile" />
+    </logger>
+    
+  </log4net>
+  
+</configuration>

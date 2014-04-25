@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using MODEL;
+using System;
 
 namespace HyperCard
 {
+    /// <summary>
+    /// This Class is outdated, replaced by Hypercard.Properties
+    /// </summary>
     public class Configs
     {
         public static List<KeyValuePair<string, string>> settings
@@ -13,7 +18,6 @@ namespace HyperCard
         }
         public static bool Save(string lang, int defaultsave, int defaultopen)
         {
-            bool result;
             if (!File.Exists("conf.hs"))
             {
                 try
@@ -57,10 +61,10 @@ namespace HyperCard
                     xmlElement.AppendChild(xmlElement3);
                     xmlDocument.Save("conf.hs");
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    result = false;
-                    return result;
+                    LoggerError.Log(ex.Message);
+                    return false;
                 }
             }
             try
@@ -73,17 +77,16 @@ namespace HyperCard
                 xmlDocument["settings"].ChildNodes[1].Attributes["defaultopen"].Value = defaultopen.ToString();
                 xmlDocument.Save("conf.hs");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                result = false;
-                return result;
+                LoggerError.Log(ex.Message);
+                return false;
             }
-            result = true;
-            return result;
+            return true;
         }
         public static bool Save(string ManaCode, string id)
         {
-            bool result;
+
             if (!File.Exists("conf.hs"))
             {
                 try
@@ -127,10 +130,10 @@ namespace HyperCard
                     xmlElement.AppendChild(xmlElement3);
                     xmlDocument.Save("conf.hs");
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    result = false;
-                    return result;
+                    LoggerError.Log(ex.Message);
+                    return false;
                 }
             }
             try
@@ -143,11 +146,10 @@ namespace HyperCard
             }
             catch (System.Exception ex)
             {
-                result = false;
-                return result;
+                LoggerError.Log(ex.Message);
+                return false;
             }
-            result = true;
-            return result;
+            return true;
         }
         public static void Load()
         {

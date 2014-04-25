@@ -28,7 +28,7 @@ namespace ACCESSOR
             }
             catch (Exception ex)
             {
-                LoggerError.Log(ex.Message);
+                LoggerError.Log(url + "\n" + path + "\n" + ex.Message);
                 return false;
             }
         }

@@ -45,6 +45,7 @@
     <Compile Include="Compressor.cs" />
     <Compile Include="ExportData.cs" />
     <Compile Include="LoadData.cs" />
+    <Compile Include="Merger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

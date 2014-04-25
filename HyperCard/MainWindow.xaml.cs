@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using HyperCard.Properties;
 
 namespace HyperCard
 {
@@ -39,10 +40,11 @@ namespace HyperCard
             InitializeComponent();
 
             //Load application settings
-            Configs.Load();
+            //Configs.Load();
+
             //Set language
             //lang = (LANGUAGE)Enum.Parse(typeof(LANGUAGE), Configs.settings.Find(k => k.Key == "lang").Value);
-            lang = LANGUAGE.Chinese_Simplified;
+            lang = Settings.Default.lang;
 
             //Match language setting with data binding
             if (lang != LANGUAGE.English)
@@ -92,12 +94,19 @@ namespace HyperCard
                 });
             }
 
-            //for (int i = 0; i < 1000; i++)
+            //try
             //{
-            //    deckmain.AddEx(new Deck(cards[i]));
-            //    deckside.AddEx(new Deck(cards[999 - i]));
+            //    for (int i = 0; i < 1000; i++)
+            //    {
+            //        deckmain.AddEx(new Deck(cards[i]));
+            //        deckside.AddEx(new Deck(cards[999 - i]));
+            //    }
             //}
-
+            //catch (Exception ex)
+            //{
+            //    LoggerError.Log(ex.Message);
+            //}
+            //MessageBox.Show(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString(), System.Reflection.MethodBase.GetCurrentMethod().Name, System.Reflection.MethodBase.GetCurrentMethod()));
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
