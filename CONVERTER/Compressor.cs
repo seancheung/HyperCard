@@ -52,7 +52,7 @@ namespace CONVERTER
 
             using (ZipFile zipFile = ZipFile.Read(zipPath))
             {
-                if (!zipFile.ContainsEntry(string.Format("{0}.jpg", ids[0])) || (ids[1] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[1]))))
+                if (!zipFile.ContainsEntry(string.Format("{0}.jpg", ids[0])) || (ids.Length > 1 && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[1]))))
                 {
                     if (!NetworkInterface.GetIsNetworkAvailable())
                     {
@@ -62,7 +62,7 @@ namespace CONVERTER
                     {
                         FormatImage.DownloadImg(card, TempPath, lang, site);
 
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < ids.Length; i++)
                         {
                             if (ids[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[i])))
                                 zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, ids[i]), "\\");
@@ -73,14 +73,14 @@ namespace CONVERTER
                     catch (Exception ex)
                     {
 
-                        LoggerError.Log(string.Format("Unzip Error:\nIDs:{0}|{1}\nLanguage:{2}\nSite:{3}\nError:{4}", ids[0], ids[1], lang, site.ToString(), ex.Message));
+                        LoggerError.Log(string.Format("Unzip Error:\nID:{0}\nLanguage:{1}\nSite:{2}\nError:{3}", card.ID, lang, site.ToString(), ex.Message));
                     }
                 }
                 else
                 {
                     try
                     {
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < ids.Length; i++)
                         {
                             if (ids[i] != string.Empty)
                                 zipFile[ids[i] + ".jpg"].Extract(TempPath, ExtractExistingFileAction.DoNotOverwrite);
@@ -89,7 +89,7 @@ namespace CONVERTER
 
                     catch (Exception ex)
                     {
-                        LoggerError.Log(string.Format("Unzip Error:\nIDs:{0}|{1}\nLanguage:{2}\nSite:{3}\nError:{4}", ids[0], ids[1], lang, site.ToString(), ex.Message));
+                        LoggerError.Log(string.Format("Unzip Error:\nID:{0}\nLanguage:{1}\nSite:{2}\nError:{3}", card.ID, lang, site.ToString(), ex.Message));
                     }
                 }
             }
@@ -139,6 +139,60 @@ namespace CONVERTER
         /// 
         /// </summary>
         /// <param name="card"></param>
+        public static void ZipEx(Card card)
+        {
+            string zipPath = string.Format("{0}{1}.zip", ImagePath, card.Set);
+            string[] names = card.Names;
+
+            if (!Directory.Exists(TempPath))
+            {
+                Directory.CreateDirectory(TempPath);
+            }
+            if (!Directory.Exists(ImagePath))
+            {
+                Directory.CreateDirectory(ImagePath);
+            }
+            if (!File.Exists(zipPath))
+            {
+                using (ZipFile zipFile = new ZipFile(zipPath))
+                {
+                    zipFile.AddDirectoryByName("EN");
+                    zipFile.Save();
+                }
+            }
+
+            try
+            {
+                using (ZipFile zipFile = ZipFile.Read(zipPath))
+                {
+                    for (int i = 0; i < names.Length; i++)
+                    {
+                        if (names[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.full.jpg", names[i])))
+                        {
+                            if (!zipFile.ContainsEntry(string.Format("\\EN\\{0}.jpg", card.IDs[i])))
+                            {
+                                FormatImage.DownloadImg(card, TempPath, LANGUAGE.English, Website.magiccards);
+                                zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, card.IDs[i]), "\\EN\\");
+                            }
+                            else
+                                zipFile["\\EN\\" + card.IDs[i] + ".jpg"].FileName = "\\EN\\" + names[i] + ".full.jpg";
+                        }
+                    }
+
+                    zipFile.Save();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerError.Log(string.Format("ZipEx Error:\nIDs:{0}\nError:{1}", card.ID, ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="card"></param>
         public static void Zip(Card card)
         {
             string zipPath = string.Format("{0}{1}.zip", ImagePath, card.SetCode);
@@ -167,7 +221,7 @@ namespace CONVERTER
             {
                 using (ZipFile zipFile = ZipFile.Read(zipPath))
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < ids.Length; i++)
                     {
                         if (ids[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[i])))
                         {
@@ -187,7 +241,7 @@ namespace CONVERTER
             }
             catch (Exception ex)
             {
-                LoggerError.Log(string.Format("Zip Error:\nIDs:{0}|{1}\nzIDs:{2}|{3}\nError:{4}", ids[0], ids[1], zids[0], zids[1], ex.Message));
+                LoggerError.Log(string.Format("Zip Error:\nID:{0}\nzID:{1}\nError:{2}", card.ID, card.zID, ex.Message));
             }
         }
 

@@ -94,6 +94,13 @@ namespace HyperCard
                 });
             }
 
+            //new CONVERTER.ExportData().Export(cards, cards[0].Set + ".en.xml", FileType.Virtual_Play_Table, LANGUAGE.English);
+            //new CONVERTER.ExportData().Export(cards, cards[0].Set + ".cs.xml", FileType.Virtual_Play_Table, LANGUAGE.Chinese_Simplified);
+
+            //foreach (var card in cards)
+            //{
+            //    CONVERTER.Compressor.ZipEx(card);
+            //}
             //FORMATTER.FormatCard.GetCard("126218", lang);
 
             //try

@@ -60,6 +60,9 @@
     <Compile Include="Classes\Configs.cs" />
     <Compile Include="Classes\ImgCard.cs" />
     <Compile Include="Classes\Langs.cs" />
+    <Compile Include="Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Styles\ImageConverter.cs" />
     <Compile Include="Styles\ListViewConverter.cs" />
@@ -77,6 +80,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Message.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ColorThemes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

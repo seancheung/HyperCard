@@ -231,31 +231,186 @@ namespace CONVERTER
             xmlDocument2.Save(filepath);
         }
 
-        /// <summary>
-        /// Export as other supported filetype
-        /// </summary>
-        /// <param name="filetype">output filetype</param>
-        /// <param name="decks">decks to save</param>
-        /// <param name="fs">Filestream to save to</param>
-        public void ExportAs(FileType filetype, List<Deck> decks, FileStream fs)
+        public void Export(List<Card> cards, string filepath, FileType ftype, LANGUAGE lang)
         {
-
-            switch (filetype)
+            switch (ftype)
             {
-                case FileType.Virtual_Play_Table: ExportAsVPT(decks, fs);
+                case FileType.Virtual_Play_Table:
+                    ExportAsVPT(cards, filepath, lang);
                     break;
-                case FileType.Magic_Workstation: ExportAsMWS(decks, fs);
+                case FileType.Magic_Workstation:
                     break;
-                case FileType.Mage: ExportAsMAGE(decks, fs);
+                case FileType.Mage:
                     break;
-                case FileType.Magic_Online: ExportAsMO(decks, fs);
+                case FileType.Magic_Online:
                     break;
                 default:
                     break;
             }
         }
 
-        private void ExportAsVPT(List<Deck> decks, FileStream fs)
+        private void ExportAsVPT(List<Card> cards, string filepath, LANGUAGE lang)
+        {
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                XmlDeclaration newChild = xmlDocument.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+                xmlDocument.AppendChild(newChild);
+                XmlElement xeitems = xmlDocument.CreateElement("items");
+                xmlDocument.AppendChild(xeitems);
+
+                XmlAttribute xagame = xmlDocument.CreateAttribute("game");
+                xagame.Value = "mtg";
+                xeitems.Attributes.Append(xagame);
+                XmlAttribute xaset = xmlDocument.CreateAttribute("set");
+                xaset.Value = cards[0].SetCode;
+                xeitems.Attributes.Append(xaset);
+                XmlAttribute xalang = xmlDocument.CreateAttribute("lang");
+                if (lang == LANGUAGE.Chinese_Simplified) xalang.Value = "CS";
+                else xalang.Value = "EN";
+                xeitems.Attributes.Append(xalang);
+                XmlAttribute xasetname = xmlDocument.CreateAttribute("setname");
+                xasetname.Value = cards[0].Set;
+                xeitems.Attributes.Append(xasetname);
+                XmlAttribute xaimagepath = xmlDocument.CreateAttribute("imagepath");
+                xaimagepath.Value = cards[0].Set;
+                xeitems.Attributes.Append(xaimagepath);
+                XmlAttribute xadate = xmlDocument.CreateAttribute("date");
+                xadate.Value = System.DateTime.Now.ToShortDateString();
+                xeitems.Attributes.Append(xadate);
+                XmlAttribute xaborder = xmlDocument.CreateAttribute("border");
+                xaborder.Value = "Black";
+                xeitems.Attributes.Append(xaborder);
+                XmlAttribute xacopyright = xmlDocument.CreateAttribute("copyright");
+                xacopyright.Value = "™ &amp; © 2014 Wizards of the Coast";
+                xeitems.Attributes.Append(xacopyright);
+
+                foreach (var card in cards)
+                {
+                    XmlNode xmlNode = xmlDocument.CreateElement("item");
+                    xeitems.AppendChild(xmlNode);
+
+                    XmlAttribute xmlAttribute = xmlDocument.CreateAttribute("id");
+                    xmlAttribute.Value = card.Name;
+                    xmlNode.Attributes.Append(xmlAttribute);
+
+                    XmlAttribute xmlAttribute2 = xmlDocument.CreateAttribute("name");
+                    if (lang == LANGUAGE.Chinese_Simplified) xmlAttribute2.Value = card.zName;
+                    else xmlAttribute2.Value = card.Name;
+                    xmlNode.Attributes.Append(xmlAttribute2);
+
+                    if (card.TypeCode.Contains("L"))
+                    {
+                        foreach (var ver in card.Vars)
+                        {
+                            if (!string.IsNullOrWhiteSpace(ver))
+                            {
+                                XmlAttribute xmlAttribute16 = xmlDocument.CreateAttribute("ver");
+                                xmlAttribute16.Value = ver[0].ToString();
+                                xmlNode.Attributes.Append(xmlAttribute16);
+                            }
+                        }
+                    }
+
+                    XmlAttribute xmlAttribute3 = xmlDocument.CreateAttribute("color");
+                    xmlAttribute3.Value = card.Color;
+                    xmlNode.Attributes.Append(xmlAttribute3);
+
+                    XmlAttribute xmlAttribute4 = xmlDocument.CreateAttribute("cost");
+                    xmlAttribute4.Value = card.Cost;
+                    xmlNode.Attributes.Append(xmlAttribute4);
+
+                    XmlAttribute xmlAttribute5 = xmlDocument.CreateAttribute("cmc");
+                    xmlAttribute5.Value = card.CMC;
+                    xmlNode.Attributes.Append(xmlAttribute5);
+
+                    XmlAttribute xmlAttribute6 = xmlDocument.CreateAttribute("type");
+                    if (lang == LANGUAGE.Chinese_Simplified) xmlAttribute6.Value = card.zType;
+                    else xmlAttribute6.Value = card.Type;
+                    xmlNode.Attributes.Append(xmlAttribute6);
+
+                    XmlAttribute xmlAttribute7 = xmlDocument.CreateAttribute("types");
+                    xmlAttribute7.Value = card.Type.Replace("—", string.Empty);
+                    xmlNode.Attributes.Append(xmlAttribute7);
+
+                    if (card.TypeCode.Contains("C"))
+                    {
+                        XmlAttribute xmlAttribute8 = xmlDocument.CreateAttribute("power");
+                        xmlAttribute8.Value = card.Pow;
+                        xmlNode.Attributes.Append(xmlAttribute8);
+
+                        XmlAttribute xmlAttribute9 = xmlDocument.CreateAttribute("toughness");
+                        xmlAttribute9.Value = card.Tgh;
+                        xmlNode.Attributes.Append(xmlAttribute9);
+                    }
+
+                    if (card.TypeCode.Contains("P"))
+                    {
+                        XmlAttribute xmlAttribute17 = xmlDocument.CreateAttribute("loyalty");
+                        xmlAttribute17.Value = card.Loyalty;
+                        xmlNode.Attributes.Append(xmlAttribute17);
+                    }
+                    XmlAttribute xmlAttribute10 = xmlDocument.CreateAttribute("text");
+                    if (lang == LANGUAGE.Chinese_Simplified) xmlAttribute10.Value = card.zText;
+                    else xmlAttribute10.Value = card.Text;
+                    xmlNode.Attributes.Append(xmlAttribute10);
+
+                    XmlAttribute xmlAttribute11 = xmlDocument.CreateAttribute("flavor");
+                    if (lang == LANGUAGE.Chinese_Simplified) xmlAttribute11.Value = card.zFlavor;
+                    else xmlAttribute11.Value = card.Flavor;
+                    xmlNode.Attributes.Append(xmlAttribute11);
+
+                    XmlAttribute xmlAttribute12 = xmlDocument.CreateAttribute("artist");
+                    xmlAttribute12.Value = card.Artist;
+                    xmlNode.Attributes.Append(xmlAttribute12);
+
+                    XmlAttribute xmlAttribute13 = xmlDocument.CreateAttribute("number");
+                    xmlAttribute13.Value = string.Format("{0}/{1}", card.Number, cards.Count.ToString());
+                    xmlNode.Attributes.Append(xmlAttribute13);
+
+                    XmlAttribute xmlAttribute14 = xmlDocument.CreateAttribute("rarity");
+                    xmlAttribute14.Value = card.Rarity;
+                    xmlNode.Attributes.Append(xmlAttribute14);
+
+                    XmlAttribute xmlAttribute15 = xmlDocument.CreateAttribute("foil");
+                    xmlAttribute15.Value = "false|true";
+                    xmlNode.Attributes.Append(xmlAttribute15);
+                }
+
+                xmlDocument.Save(filepath);
+            }
+            catch (Exception ex)
+            {
+                LoggerError.Log("Exporting Database As VPT Error: " + ex.Message);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Export as other supported filetype
+        /// </summary>
+        /// <param name="filetype">output filetype</param>
+        /// <param name="decks">decks to save</param>
+        /// <param name="fs">Filestream to save to</param>
+        public void SaveAs(FileType filetype, List<Deck> decks, FileStream fs)
+        {
+
+            switch (filetype)
+            {
+                case FileType.Virtual_Play_Table: SaveAsVPT(decks, fs);
+                    break;
+                case FileType.Magic_Workstation: SaveAsMWS(decks, fs);
+                    break;
+                case FileType.Mage: SaveAsMAGE(decks, fs);
+                    break;
+                case FileType.Magic_Online: SaveAsMO(decks, fs);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SaveAsVPT(List<Deck> decks, FileStream fs)
         {
             XmlDocument xmlDocument = new XmlDocument();
             XmlDeclaration newChild = xmlDocument.CreateXmlDeclaration("1.0", "UTF-8", "yes");
@@ -343,7 +498,7 @@ namespace CONVERTER
             xmlDocument.Save(fs);
         }
 
-        private void ExportAsMWS(List<Deck> decks, FileStream fs)
+        private void SaveAsMWS(List<Deck> decks, FileStream fs)
         {
             StreamWriter streamWriter = new StreamWriter(fs);
             streamWriter.WriteLine("// Comments\n");
@@ -396,7 +551,7 @@ namespace CONVERTER
             streamWriter.Close();
         }
 
-        private void ExportAsMAGE(List<Deck> decks, FileStream fs)
+        private void SaveAsMAGE(List<Deck> decks, FileStream fs)
         {
             StreamWriter streamWriter = new StreamWriter(fs);
             streamWriter.WriteLine("NAME:");
@@ -433,7 +588,7 @@ namespace CONVERTER
             streamWriter.Close();
         }
 
-        private void ExportAsMO(List<Deck> decks, FileStream fs)
+        private void SaveAsMO(List<Deck> decks, FileStream fs)
         {
             StreamWriter streamWriter = new StreamWriter(fs);
             foreach (Deck current in decks)
