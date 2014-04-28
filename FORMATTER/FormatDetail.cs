@@ -280,13 +280,18 @@ namespace FORMATTER
                                 text6 = text6.Insert(k, String.Format("{{{0}}}", str));
                             }
                             //Mark
+                            string cost = string.Empty;
                             while (text6.Contains("<"))
                             {
                                 int num11 = text6.IndexOf("<");
                                 int num12 = text6.IndexOf(">");
+                                int start = text6.IndexOf("alt=") + 5;
+                                int end = text6.IndexOf(@"""", start);
+                                cost += "(" + text6.Substring(start, end - start) + ")";
                                 text6 = text6.Remove(num11, num12 - num11 + 1).Trim();
                             }
-                            card.Cost = String.Format("{0}|{1}", card.Cost, text6);
+                            //cost = cost.Replace("White", "W").Replace("Green", "G").Replace("Blue", "U").Replace("Red", "R").Replace("Black", "B");
+                            card.Cost = String.Format("{0}|{1}", card.Cost, cost);
                         }
                         if (webdata.IndexOf("Card Text:") > 0)
                         {

@@ -35,6 +35,8 @@ namespace HyperCard
         private Thread tddownload;
         private Thread tdupdate;
 
+        private int maxThread = 5;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -101,8 +103,7 @@ namespace HyperCard
             //{
             //    CONVERTER.Compressor.ZipEx(card);
             //}
-            //FORMATTER.FormatCard.GetCard("126218", lang);
-
+            //Card card = FORMATTER.FormatCard.GetCard("262662", lang);
             //try
             //{
             //    for (int i = 0; i < 1000; i++)
@@ -202,7 +203,6 @@ namespace HyperCard
 
             tdupdate = new Thread(delegate()
                 {
-                    //Handle sets one by one
                     foreach (var set in updatesets)
                     {
                         Dispatcher.BeginInvoke((Action)delegate
@@ -216,63 +216,156 @@ namespace HyperCard
                         if (cards == null)
                             continue;
 
+                        var n = cards.Count;
+
                         Dispatcher.BeginInvoke((Action)delegate
                         {
                             //Set ProgressBar
                             progressbar.Value = 0;
-                            progressbar.Maximum = cards.Count;
+                            progressbar.Maximum = n;
                         });
 
-                        for (int i = 0; i < cards.Count; i++)
+                        var tps = new List<List<Card>>();
+                        for (int i = 0; i < maxThread - 1; i++)
                         {
-                            Dispatcher.BeginInvoke((Action)delegate
-                            {
-                                //Set ProgressText
-                                progresstext.Text = string.Format("Formatting Card {0}", cards[i].ID);
-                            });
+                            tps.Add(cards.GetRange(n * i / maxThread, n / maxThread));
+                        }
+                        tps.Add(cards.GetRange(n * (maxThread - 1) / maxThread, n % maxThread == 0 ? n / maxThread : n / maxThread + 1));
 
-                            //Get Card Properties
-                            cards[i] = FormatCard.GetCard(cards[i], lang);
-                            //Remove Null card
-                            if (cards[i] == null)
-                                cards.RemoveAt(i);
+                        WaitCallback waitCallback = new WaitCallback(DownloadCards);
 
-                            Dispatcher.BeginInvoke((Action)delegate
-                            {
-                                //Set ProgressBar
-                                progressbar.Value = i;
-                            });
-
+                        foreach (var tp in tps)
+                        {
+                            ThreadPool.QueueUserWorkItem(waitCallback, new object[] { tp, set });
                         }
 
-                        //Save data to local database
-                        new CONVERTER.ExportData().Export(cards, "Database.db");
-
-                        Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            //Mark the finished set as local
-                            foreach (ListBoxItem item in availablesets.Items)
-                            {
-                                if (item.Content.ToString() == set)
-                                {
-                                    item.IsSelected = false;
-                                    item.Foreground = new SolidColorBrush
-                                    {
-                                        Color = (Color)ColorConverter.ConvertFromString("#FF336B9B")
-                                    };
-                                    break;
-                                }
-                            }
-                        });
                     }
 
-                    Dispatcher.BeginInvoke((Action)delegate
-                    {
-                        EnableButtons(true);
-                    });
                 });
 
             tdupdate.Start();
+
+            //tdupdate = new Thread(delegate()
+            //    {
+            //        //Handle sets one by one
+            //        foreach (var set in updatesets)
+            //        {
+            //            Dispatcher.BeginInvoke((Action)delegate
+            //            {
+            //                //Set ProgressText
+            //                progresstext.Text = string.Format("Benginning {0}", set);
+            //            });
+
+            //            //Get Card Id List
+            //            List<Card> cards = FormatCard.GetIds(set.Remove(set.IndexOf("(")), set.Substring(set.IndexOf("(") + 1, set.IndexOf(")") - set.IndexOf("(") - 1));
+            //            if (cards == null)
+            //                continue;
+
+            //            Dispatcher.BeginInvoke((Action)delegate
+            //            {
+            //                //Set ProgressBar
+            //                progressbar.Value = 0;
+            //                progressbar.Maximum = cards.Count;
+            //            });
+
+            //            for (int i = 0; i < cards.Count; i++)
+            //            {
+            //                Dispatcher.BeginInvoke((Action)delegate
+            //                {
+            //                    //Set ProgressText
+            //                    progresstext.Text = string.Format("Formatting Card {0}", cards[i].ID);
+            //                });
+
+            //                //Get Card Properties
+            //                cards[i] = FormatCard.GetCard(cards[i], lang);
+            //                //Remove Null card
+            //                if (cards[i] == null)
+            //                    cards.RemoveAt(i);
+
+            //                Dispatcher.BeginInvoke((Action)delegate
+            //                {
+            //                    //Set ProgressBar
+            //                    progressbar.Value = i;
+            //                });
+
+            //            }
+
+            //            //Save data to local database
+            //            new CONVERTER.ExportData().Export(cards, "Database.db");
+
+            //            Dispatcher.BeginInvoke((Action)delegate
+            //            {
+            //                //Mark the finished set as local
+            //                foreach (ListBoxItem item in availablesets.Items)
+            //                {
+            //                    if (item.Content.ToString() == set)
+            //                    {
+            //                        item.IsSelected = false;
+            //                        item.Foreground = new SolidColorBrush
+            //                        {
+            //                            Color = (Color)ColorConverter.ConvertFromString("#FF336B9B")
+            //                        };
+            //                        break;
+            //                    }
+            //                }
+            //            });
+            //        }
+
+            //        Dispatcher.BeginInvoke((Action)delegate
+            //        {
+            //            EnableButtons(true);
+            //        });
+            //    });
+
+            //tdupdate.Start();
+
+        }
+
+        private void DownloadCards(object obj)
+        {
+            object[] o = obj as object[];
+            List<Card> cards = o[0] as List<Card>;
+            string set = o[1].ToString();
+            for (int i = 0; i < cards.Count; i++)
+            {
+                progresstext.Dispatcher.Invoke((Action)delegate { progresstext.Text = string.Format("Formatting Card {0}", cards[i].ID); });
+                cards[i] = FormatCard.GetCard(cards[i], lang);
+                if (cards[i] == null)
+                    cards.RemoveAt(i);
+                progressbar.Dispatcher.Invoke((Action)delegate { progressbar.Value++; });
+            }
+
+            new CONVERTER.ExportData().Export(cards, "Database.db");
+
+            Dispatcher.BeginInvoke((Action)delegate
+            {
+                if (progressbar.Value == progressbar.Maximum - 1)
+                    //Mark the finished set as local
+                    foreach (ListBoxItem item in availablesets.Items)
+                    {
+                        if (item.Content.ToString() == set)
+                        {
+                            item.IsSelected = false;
+                            item.Foreground = new SolidColorBrush
+                            {
+                                Color = (Color)ColorConverter.ConvertFromString("#FF336B9B")
+                            };
+                            break;
+                        }
+                    }
+
+                bool isFinished = true;
+                foreach (ListBoxItem item in availablesets.Items)
+                {
+                    if (item.IsSelected == true)
+                    {
+                        isFinished = false;
+                        break;
+                    }
+                }
+                if (isFinished) EnableButtons(true);
+            });
+
         }
 
         /// <summary>

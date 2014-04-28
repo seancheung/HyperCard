@@ -59,7 +59,7 @@
   <ItemGroup>
     <None Include="DLLs\log4net.dll" />
     <None Include="log.hyc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

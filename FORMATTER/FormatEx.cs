@@ -17,6 +17,7 @@ namespace FORMATTER
         private static Card FormatzText(Card card)
         {
             string text = "";
+            card.Cost = card.Cost.Replace("White", "W").Replace("Green", "G").Replace("Blue", "U").Replace("Red", "R").Replace("Black", "B");
             card.Cost = card.Cost.Replace("{", string.Empty).Replace("}", string.Empty);
             for (int i = 0; i < card.Cost.Count<char>(); i++)
             {
