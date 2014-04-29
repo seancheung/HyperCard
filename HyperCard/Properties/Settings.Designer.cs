@@ -249,5 +249,17 @@ namespace HyperCard.Properties {
                 this["manaWU"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Database.db")]
+        public string dbname {
+            get {
+                return ((string)(this["dbname"]));
+            }
+            set {
+                this["dbname"] = value;
+            }
+        }
     }
 }

@@ -59,5 +59,8 @@
     <Setting Name="manaWU" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="dbname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Database.db</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

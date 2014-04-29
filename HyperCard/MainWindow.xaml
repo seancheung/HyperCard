@@ -107,7 +107,7 @@
                                 <TextBlock Name="progresstext" Foreground="{StaticResource Color_A}" TextAlignment="Center" Text="Satus" Visibility="Collapsed"/>
                                 <ProgressBar Name="progressbar" Style="{StaticResource AnimProgressBar}" BorderThickness="0" Margin="2" Visibility="Collapsed"/>
                             </StackPanel>
-                            <ListBox Grid.Row="1" Name="availablesets" Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8"/>
+                            <ListBox Grid.Row="1" Name="availablesets" Style="{StaticResource DataItemCheckListBoxStyle}" BorderBrush="{StaticResource Color_A1}" BorderThickness="0.8" Loaded="availablesets_Loaded"/>
                             <Canvas Grid.Row="2" Background="{StaticResource Color_B}"/>
                         </Grid>
                     </TabItem>
