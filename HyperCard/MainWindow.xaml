@@ -241,8 +241,10 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverter}, IsAsync=True}"/>
-                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverterB}, IsAsync=True}"/>
+                            <!--<Image Name="imgfront" Grid.Row="0" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverter}, IsAsync=True}"/>
+                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" Source="{Binding Path=CurrentItem, Converter={StaticResource ImgConverterB}, IsAsync=True}"/>-->
+                            <Image Name="imgfront" Grid.Row="0" Stretch="Uniform" />
+                            <Image Name="imgback" Grid.Row="1" Stretch="Uniform" />
                         </Grid>
                     </ScrollViewer>
                 </TabItem>

@@ -85,7 +85,7 @@ namespace FORMATTER
             {
                 card.zText = "";
             }
-            if (card.isdoubleface)
+            if (card.IsDoubleFaced)
             {
                 int num15 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
                 int num16 = webdata.IndexOf("</div>", num15);
@@ -139,7 +139,7 @@ namespace FORMATTER
             }
             else
             {
-                if (card.issplit)
+                if (card.IsSplit)
                 {
                     //int num15 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
                     //int num16 = webdata.IndexOf("</div>", num15);

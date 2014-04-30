@@ -1,4 +1,6 @@
-﻿using FORMATTER;
+﻿using CONVERTER;
+using FORMATTER;
+using HyperCard.Properties;
 using MODEL;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using HyperCard.Properties;
+using System.Windows.Media.Imaging;
 
 namespace HyperCard
 {
@@ -69,7 +71,7 @@ namespace HyperCard
             //Load database
             if (File.Exists(Settings.Default.dbname))
             {
-                cards = new CONVERTER.LoadData().LoadDatabase(Settings.Default.dbname);
+                cards = LoadData.LoadDatabase(Settings.Default.dbname);
             }
             else
             {
@@ -96,28 +98,6 @@ namespace HyperCard
                     IsSelected = true
                 });
             }
-
-            //new CONVERTER.ExportData().Export(cards, cards[0].Set + ".en.xml", FileType.Virtual_Play_Table, LANGUAGE.English);
-            //new CONVERTER.ExportData().Export(cards, cards[0].Set + ".cs.xml", FileType.Virtual_Play_Table, LANGUAGE.Chinese_Simplified);
-
-            //foreach (var card in cards)
-            //{
-            //    CONVERTER.Compressor.ZipEx(card);
-            //}
-            //Card card = FORMATTER.FormatCard.GetCard("262662", lang);
-            //try
-            //{
-            //    for (int i = 0; i < 1000; i++)
-            //    {
-            //        deckmain.AddEx(new Deck(cards[i]));
-            //        deckside.AddEx(new Deck(cards[999 - i]));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    LoggerError.Log(ex.Message);
-            //}
-            //MessageBox.Show(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString(), System.Reflection.MethodBase.GetCurrentMethod().Name, System.Reflection.MethodBase.GetCurrentMethod()));
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
@@ -130,6 +110,19 @@ namespace HyperCard
         {
             //Binding current selected item to detailstab
             detailstab.DataContext = (sender as ListView).ItemsSource;
+            var item = (sender as ListView).SelectedItem;
+            //Start a new thread to extract/download images
+            new Thread(delegate()
+                {
+                    if (item != null)
+                    {
+                        Dispatcher.Invoke(delegate() { imgfront.Source = new BitmapImage(new Uri(@"\Resources\frame_back.jpg", UriKind.RelativeOrAbsolute)); imgback.Source = new BitmapImage(new Uri(@"\Resources\frame_back.jpg", UriKind.RelativeOrAbsolute)); });
+                        string img = Compressor.GetImagePath(item as Card, lang);
+                        imgfront.Dispatcher.Invoke(delegate() { imgfront.Source = new BitmapImage(new Uri(img, UriKind.RelativeOrAbsolute)); });
+                        string imgb = Compressor.GetImagePath(item as Card, lang, false);
+                        imgback.Dispatcher.Invoke(delegate() { imgback.Source = new BitmapImage(new Uri(imgb, UriKind.RelativeOrAbsolute)); });
+                    }
+                }).Start();
 
         }
 
@@ -312,7 +305,7 @@ namespace HyperCard
             lock (_lock)
             {
                 //Save Data
-                new CONVERTER.ExportData().Export(cards, Settings.Default.dbname);
+                ExportData.Export(cards, Settings.Default.dbname);
             }
 
             //Set the current thread state as finished
@@ -384,7 +377,7 @@ namespace HyperCard
                         progresstext.Text = string.Format("Downloading Card {0}", pcards[i].ID);
                     });
 
-                    CONVERTER.Compressor.Zip(pcards[i]);
+                    Compressor.Zip(pcards[i]);
 
                     Dispatcher.BeginInvoke((Action)delegate
                     {
@@ -476,6 +469,16 @@ namespace HyperCard
 
                 tdrefresh.Start();
             }
+        }
+
+        /// <summary>
+        /// Update a card's database
+        /// </summary>
+        /// <param name="card">Card to update</param>
+        private void UpdateSingleCard(Card card)
+        {
+            card = FormatCard.GetCard(card, lang);
+            ExportData.Export(new List<Card>() { card }, Settings.Default.dbname);
         }
 
     }

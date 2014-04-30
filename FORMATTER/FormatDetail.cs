@@ -18,6 +18,8 @@ namespace FORMATTER
         private static Card GetDetails(Card card)
         {
             string webdata = Request.GetWebData(GetURL(card.ID));
+            bool isdoubleface = false;
+            bool issplit = false;
 
             if (!webdata.Contains("Card Name:"))
             {
@@ -44,19 +46,12 @@ namespace FORMATTER
                 {
                     if (webdata.IndexOf("Converted Mana Cost:") != webdata.LastIndexOf("Converted Mana Cost:"))
                     {
-                        card.issplit = true;
-                        card.isdoubleface = false;
+                        issplit = true;
                     }
                     else
                     {
-                        card.isdoubleface = true;
-                        card.issplit = false;
+                        isdoubleface = true;
                     }
-                }
-                else
-                {
-                    card.isdoubleface = false;
-                    card.issplit = false;
                 }
                 int num3 = webdata.IndexOf("<div class=\"value\">", webdata.IndexOf("Card Name:")) + 20;
                 int num4 = webdata.IndexOf("</div>", num3);
@@ -156,7 +151,7 @@ namespace FORMATTER
                 {
                     card.Rulings = "";
                 }
-                if (card.isdoubleface)
+                if (isdoubleface)
                 {
                     int num25 = webdata.IndexOf("multiverseid=", webdata.LastIndexOf("<img src=\"../../Handlers/Image.ashx?multiverseid=")) + 13;
                     int num26 = webdata.IndexOf("&amp", num25);
@@ -248,12 +243,12 @@ namespace FORMATTER
                     {
                         int num43 = webdata.IndexOf("<div class=\"value\">", webdata.IndexOf("Color Indicator:")) + 20;
                         int num44 = webdata.IndexOf("</div>", num43);
-                        card.bcolor = webdata.Substring(num43, num44 - num43).Trim();
+                        card.bColor = webdata.Substring(num43, num44 - num43).Trim();
                     }
                 }
                 else
                 {
-                    if (card.issplit)
+                    if (issplit)
                     {
                         int num27 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
                         int num28 = webdata.IndexOf("</div>", num27);
@@ -336,7 +331,7 @@ namespace FORMATTER
                         {
                             int num43 = webdata.IndexOf("<div class=\"value\">", webdata.IndexOf("Color Indicator:")) + 20;
                             int num44 = webdata.IndexOf("</div>", num43);
-                            card.bcolor = webdata.Substring(num43, num44 - num43).Trim();
+                            card.bColor = webdata.Substring(num43, num44 - num43).Trim();
                         }
                     }
                 }

@@ -98,9 +98,9 @@ namespace FORMATTER
                 card.ColorCode += "C";
             }
             card.Color = card.Color.Trim();
-            if (card.isdoubleface)
+            if (card.IsDoubleFaced)
             {
-                card.Color = String.Format("{0}|{1}", card.Color, card.bcolor);
+                card.Color = String.Format("{0}|{1}", card.Color, card.bColor);
             }
             card.Color = card.Color.Trim();
             if (card.Type.Contains("Legendary"))

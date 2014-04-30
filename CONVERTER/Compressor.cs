@@ -13,6 +13,8 @@ namespace CONVERTER
 {
     public class Compressor
     {
+        private static object _lock = new object();
+
         /// <summary>
         /// Default Image folder path
         /// </summary>
@@ -60,15 +62,24 @@ namespace CONVERTER
                     }
                     try
                     {
-                        FormatImage.DownloadImg(card, TempPath, lang, site);
+                        lock (_lock)
+                        {
+                            FormatImage.DownloadImg(card, TempPath, lang, site);
+                        }
 
                         for (int i = 0; i < ids.Length; i++)
                         {
                             if (ids[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[i])))
-                                zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, ids[i]), "\\");
-                        }
+                                lock (_lock)
+                                {
+                                    zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, ids[i]), "\\");
+                                }
 
-                        zipFile.Save();
+                        }
+                        lock (_lock)
+                        {
+                            zipFile.Save();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -83,7 +94,10 @@ namespace CONVERTER
                         for (int i = 0; i < ids.Length; i++)
                         {
                             if (ids[i] != string.Empty)
-                                zipFile[ids[i] + ".jpg"].Extract(TempPath, ExtractExistingFileAction.DoNotOverwrite);
+                                lock (_lock)
+                                {
+                                    zipFile[ids[i] + ".jpg"].Extract(TempPath, ExtractExistingFileAction.DoNotOverwrite);
+                                }
                         }
                     }
 
@@ -125,8 +139,11 @@ namespace CONVERTER
                 using (ZipFile zipFile = ZipFile.Read(zipPath))
                 {
                     if (!zipFile.ContainsEntry(string.Format("{0}.jpg", id)) && File.Exists(String.Format("{0}{1}.jpg", TempPath, id)))
-                        zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, id), "\\");
-                    zipFile.Save();
+                        lock (_lock)
+                        {
+                            zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, id), "\\");
+                            zipFile.Save();
+                        }
                 }
             }
             catch (Exception ex)
@@ -171,15 +188,24 @@ namespace CONVERTER
                         {
                             if (!zipFile.ContainsEntry(string.Format("\\EN\\{0}.jpg", card.IDs[i])))
                             {
-                                FormatImage.DownloadImg(card, TempPath, LANGUAGE.English, Website.magiccards);
-                                zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, card.IDs[i]), "\\EN\\");
+                                
+                                lock (_lock)
+                                {
+                                    FormatImage.DownloadImg(card, TempPath, LANGUAGE.English, Website.magiccards);
+                                    zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, card.IDs[i]), "\\EN\\");
+                                }
                             }
                             else
-                                zipFile["\\EN\\" + card.IDs[i] + ".jpg"].FileName = "\\EN\\" + names[i] + ".full.jpg";
+                                lock (_lock)
+                                {
+                                    zipFile["\\EN\\" + card.IDs[i] + ".jpg"].FileName = "\\EN\\" + names[i] + ".full.jpg";
+                                }
                         }
                     }
-
-                    zipFile.Save();
+                    lock (_lock)
+                    {
+                        zipFile.Save();
+                    }
 
                 }
             }
@@ -226,16 +252,24 @@ namespace CONVERTER
                         if (ids[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", ids[i])))
                         {
                             FormatImage.DownloadImg(ids[i], TempPath);
-                            zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, ids[i]), "\\");
+                            lock (_lock)
+                            {
+                                zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, ids[i]), "\\");
+                            }
                         }
                         if (zids[i] != string.Empty && !zipFile.ContainsEntry(string.Format("{0}.jpg", zids[i])))
                         {
                             FormatImage.DownloadImg(zids[i], TempPath);
-                            zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, zids[i]), "\\");
+                            lock (_lock)
+                            {
+                                zipFile.AddFile(String.Format("{0}{1}.jpg", TempPath, zids[i]), "\\");
+                            }
                         }
                     }
-
-                    zipFile.Save();
+                    lock (_lock)
+                    {
+                        zipFile.Save();
+                    }
 
                 }
             }
@@ -256,43 +290,14 @@ namespace CONVERTER
         {
             string uri = null;
 
-            string id = lang == LANGUAGE.English || card.zID == string.Empty ? card.ID : card.zID;
+            string[] ids = lang == LANGUAGE.English || card.zID == string.Empty ? card.IDs : card.zIDs;
 
             Unzip(card, lang);
 
-            if (id.Contains("|"))
-            {
-                if (isFront)
-                {
-                    id = id.Remove(id.IndexOf("|"));
-                }
-                else
-                {
-                    id = id.Substring(id.IndexOf("|") + 1);
-                }
-
-                uri = string.Format("{0}{1}.jpg", TempPath, id);
-            }
+            if (card.IsDoubleFaced)
+                uri = isFront ? string.Format("{0}{1}.jpg", TempPath, ids[0]) : string.Format("{0}{1}.jpg", TempPath, ids[1]);
             else
-            {
-                if (!isFront)
-                {
-                    uri = @"\Resources\frame_back.jpg";
-                }
-                else
-                {
-                    uri = string.Format("{0}{1}.jpg", TempPath, id);
-                }
-
-            }
-
-            //if (id.Contains("|"))
-            //    if (isFront) id = id.Remove(id.IndexOf("|"));
-            //    else id = id.Substring(id.IndexOf("|") + 1);
-            //if (isFront) 
-            //    uri = string.Format("{0}{1}.jpg", TempPath, id);
-            //else
-            //    uri = @"\Resources\frame_back.jpg";
+                uri = isFront ? string.Format("{0}{1}.jpg", TempPath, ids[0]) : @"\Resources\frame_back.jpg";
 
             return uri;
         }

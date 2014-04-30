@@ -8,21 +8,12 @@ namespace MODEL
     /// </summary>
     public class Card
     {
-        /// <summary>
-        /// Whether it is a double-faced card
-        /// </summary>
-        public bool isdoubleface { get; set; }
-
-        /// <summary>
-        /// Whether it is a split card
-        /// </summary>
-        public bool issplit { get; set; }
 
         /// <summary>
         /// the color of its B-side card(if double-faced)
         /// (use use ' ' as separator for multi-color, e.g. 'Red Blue')
         /// </summary>
-        public string bcolor { get; set; }
+        public string bColor { get; set; }
 
         /// <summary>
         /// English WotcID of the card
@@ -583,10 +574,7 @@ namespace MODEL
         {
             get
             {
-                if (ID.Contains("|"))
-                    return true;
-                else
-                    return false;
+                return ID.Contains("|");
             }
         }
 
@@ -597,10 +585,7 @@ namespace MODEL
         {
             get
             {
-                if (Cost.Contains("|") && !ID.Contains("|"))
-                    return true;
-                else
-                    return false;
+                return Cost.Contains("|") && !ID.Contains("|");
             }
         }
 

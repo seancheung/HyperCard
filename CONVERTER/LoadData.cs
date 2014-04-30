@@ -13,7 +13,7 @@ namespace CONVERTER
         /// </summary>
         /// <param name="xmlpath"></param>
         /// <returns></returns>
-        public List<Card> LoadDatabase(string xmlpath)
+        public static List<Card> LoadDatabase(string xmlpath)
         {
             List<Card> list = new List<Card>();
             XmlDocument xmlDocument = new XmlDocument();

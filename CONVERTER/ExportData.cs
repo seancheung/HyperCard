@@ -13,7 +13,7 @@ namespace CONVERTER
         /// </summary>
         /// <param name="cards">Cards that are fully filled</param>
         /// <param name="filepath">File saving path</param>
-        public void Export(List<Card> cards, string filepath)
+        public static void Export(List<Card> cards, string filepath)
         {
             if (!File.Exists(filepath))
             {
@@ -168,7 +168,7 @@ namespace CONVERTER
         /// </summary>
         /// <param name="format">Game format</param>
         /// <param name="filepath">File saving path</param>
-        public void Export(List<Format> format, string filepath)
+        public static void Export(List<Format> format, string filepath)
         {
             if (!File.Exists(filepath))
             {
@@ -231,7 +231,7 @@ namespace CONVERTER
             xmlDocument2.Save(filepath);
         }
 
-        public void Export(List<Card> cards, string filepath, FileType ftype, LANGUAGE lang)
+        public static void Export(List<Card> cards, string filepath, FileType ftype, LANGUAGE lang)
         {
             switch (ftype)
             {
@@ -249,7 +249,7 @@ namespace CONVERTER
             }
         }
 
-        private void ExportAsVPT(List<Card> cards, string filepath, LANGUAGE lang)
+        private static void ExportAsVPT(List<Card> cards, string filepath, LANGUAGE lang)
         {
             try
             {
