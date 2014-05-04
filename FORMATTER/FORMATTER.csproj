@@ -40,16 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormatCard.cs" />
-    <Compile Include="FormatDetail.cs" />
-    <Compile Include="FormatEx.cs" />
-    <Compile Include="FormatForeignDetail.cs" />
-    <Compile Include="FormatForeignID.cs" />
-    <Compile Include="FormatID.cs" />
+    <Compile Include="internal\FormatDetail.cs" />
+    <Compile Include="internal\FormatEx.cs" />
+    <Compile Include="internal\FormatForeignDetail.cs" />
+    <Compile Include="internal\FormatForeignID.cs" />
+    <Compile Include="internal\FormatID.cs" />
     <Compile Include="FormatImage.cs" />
-    <Compile Include="FormatLegality.cs" />
+    <Compile Include="internal\FormatLegality.cs" />
     <Compile Include="FormatLegalityList.cs" />
     <Compile Include="FormatSets.cs" />
-    <Compile Include="FormatterTag.cs" />
+    <Compile Include="internal\FormatterTag.cs" />
+    <Compile Include="ManaExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

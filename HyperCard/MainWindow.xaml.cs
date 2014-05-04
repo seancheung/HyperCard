@@ -98,7 +98,6 @@ namespace HyperCard
                     IsSelected = true
                 });
             }
-
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
