@@ -40,7 +40,7 @@ namespace HyperCard
         private Thread tdupdate;
 
         //Max thread amount for downloading
-        private int maxThread = 10;
+        private const int maxThread = 10;
 
         private static object _lock = new object();
 
@@ -98,6 +98,7 @@ namespace HyperCard
                     IsSelected = true
                 });
             }
+
         }
 
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
@@ -118,9 +119,9 @@ namespace HyperCard
                     {
                         Dispatcher.Invoke(delegate() { imgfront.Source = new BitmapImage(new Uri(@"\Resources\frame_back.jpg", UriKind.RelativeOrAbsolute)); imgback.Source = new BitmapImage(new Uri(@"\Resources\frame_back.jpg", UriKind.RelativeOrAbsolute)); });
                         string img = Compressor.GetImagePath(item as Card, lang);
-                        imgfront.Dispatcher.Invoke(delegate() { imgfront.Source = new BitmapImage(new Uri(img, UriKind.RelativeOrAbsolute)); });
+                        if (File.Exists(img)) imgfront.Dispatcher.Invoke(delegate() { imgfront.Source = new BitmapImage(new Uri(img, UriKind.RelativeOrAbsolute)); });
                         string imgb = Compressor.GetImagePath(item as Card, lang, false);
-                        imgback.Dispatcher.Invoke(delegate() { imgback.Source = new BitmapImage(new Uri(imgb, UriKind.RelativeOrAbsolute)); });
+                        if (File.Exists(img)) imgback.Dispatcher.Invoke(delegate() { imgback.Source = new BitmapImage(new Uri(imgb, UriKind.RelativeOrAbsolute)); });
                     }
                 }).Start();
 

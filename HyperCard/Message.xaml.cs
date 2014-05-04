@@ -19,40 +19,103 @@ namespace HyperCard
     /// </summary>
     public partial class Message : Window
     {
+        private static MessageBoxResult result;
+        private string title
+        {
+            get
+            {
+                return txtTitle.Text;
+            }
+            set
+            {
+                txtTitle.Text = value;
+            }
+        }
+        private string message
+        {
+            get
+            {
+                return txtMsg.Text;
+            }
+            set
+            {
+                txtMsg.Text = value;
+            }
+        }
+
         private Message()
         {
             InitializeComponent();
         }
 
-        public static void Show(string msg)
+        public static MessageBoxResult Show(string msg)
         {
-
-        }
-
-        public static void Show(string msg, string title, MessageBoxButton btn)
-        {
-            switch (btn)
+            new Message()
             {
-                case MessageBoxButton.OK:
-                    break;
-                case MessageBoxButton.OKCancel:
-                    break;
-                case MessageBoxButton.YesNo:
-                    break;
-                case MessageBoxButton.YesNoCancel:
-                    break;
-                default:
-                    break;
-            }
+                title = string.Empty,
+                message = msg,
+                btnNo = { Visibility = Visibility.Collapsed },
+                btnYes = { Visibility = Visibility.Collapsed },
+                btnCancel = { Visibility = Visibility.Collapsed },
+                btnOK = { Visibility = Visibility.Visible }
+            }.ShowDialog();
+
+            return result;
         }
+
+        public static MessageBoxResult Show(string title, string msg, MessageBoxButton btn)
+        {
+            bool yesNo = btn.ToString().Contains("Yes");
+            bool cancel = btn.ToString().Contains("Cancel");
+            bool ok = btn.ToString().Contains("OK");
+
+            new Message()
+            {
+                title = title,
+                message = msg,
+                btnNo = { Visibility = yesNo ? Visibility.Visible : Visibility.Collapsed },
+                btnYes = { Visibility = yesNo ? Visibility.Visible : Visibility.Collapsed },
+                btnCancel = { Visibility = cancel && yesNo ? Visibility.Visible : Visibility.Collapsed },
+                btnOK = { Visibility = ok ? Visibility.Visible : Visibility.Collapsed }
+
+            }.ShowDialog();
+
+            return result;
+        }
+
         private void Window_DragMove(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            result = MessageBoxResult.None;
+            Close();
+        }
+
+        private void btnYes_Click(object sender, RoutedEventArgs e)
+        {
+            result = MessageBoxResult.Yes;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            result = MessageBoxResult.Cancel;
+            Close();
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            result = MessageBoxResult.OK;
+            Close();
+        }
+
+        private void btnNo_Click(object sender, RoutedEventArgs e)
+        {
+            result = MessageBoxResult.No;
+            Close();
         }
     }
 }

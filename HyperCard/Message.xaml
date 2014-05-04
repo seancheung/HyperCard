@@ -1,13 +1,12 @@
 ﻿<Window x:Class="HyperCard.Message"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Message" MinHeight="100" MinWidth="300"
-        Height="100" Width="300"
+        Title="Message" MinHeight="120" MinWidth="300" MaxWidth="400"
+        Height="120" Width="300"
         WindowStyle="None" AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
         MouseLeftButtonDown="Window_DragMove"
-        BorderBrush="{StaticResource Color_A}" BorderThickness="0.8"
-        Background="{StaticResource Color_A0}">
+        BorderThickness="0"
+        Background="Transparent" ShowInTaskbar="False" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,9 +18,25 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Canvas Grid.ColumnSpan="4" Background="{StaticResource Color_A}">
             <Button Name="Close" Style="{StaticResource ButtonClose}" Canvas.Right="5" Canvas.Top="0" Width="22" Height="22" Click="Close_Click"/>
         </Canvas>
+        <TextBlock Name="txtTitle" Margin="25,0" Text="Title" TextAlignment="Justify" TextWrapping="Wrap" Foreground="{StaticResource Color_C}" FontSize="14"/>
+        <Border Grid.Row="1" Background="{StaticResource Color_A0}" BorderThickness="0.8" BorderBrush="{StaticResource Color_A1}">
+            <TextBlock Name="txtMsg" Margin="4" Text="Message Content" TextAlignment="Justify" TextWrapping="Wrap" Foreground="{StaticResource Color_C}" FontSize="14"/>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="btnYes" Style="{StaticResource ButtonMetro}" Margin="2,0" Content="YES" Click="btnYes_Click"/>
+            <Button Name="btnCancel" Grid.Column="1" Style="{StaticResource ButtonMetro}" Margin="2,0" Content="CANCEL" Click="btnCancel_Click"/>
+            <Button Name="btnOK" Grid.Column="1" Style="{StaticResource ButtonMetro}" Margin="2,0" Content="OK" Visibility="Collapsed" Click="btnOK_Click"/>
+            <Button Name="btnNo" Grid.Column="2" Style="{StaticResource ButtonMetro}" Margin="2,0" Content="NO" Click="btnNo_Click"/>
+        </Grid>
     </Grid>
 </Window>

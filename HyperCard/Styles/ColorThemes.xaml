@@ -6,5 +6,6 @@
     <SolidColorBrush x:Key="Color_A2" Color="#0C6881" />
     <SolidColorBrush x:Key="Color_B" Color="#9C9C9C" />
     <SolidColorBrush x:Key="Color_B1" Color="#34000000" />
+    <SolidColorBrush x:Key="Color_C" Color="#303030" />
     
 </ResourceDictionary>
