@@ -58,8 +58,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Configs.cs" />
-    <Compile Include="Classes\ImgCard.cs" />
     <Compile Include="Classes\Langs.cs" />
+    <Compile Include="Classes\ManaIcon.cs" />
     <Compile Include="Message.xaml.cs">
       <DependentUpon>Message.xaml</DependentUpon>
     </Compile>
