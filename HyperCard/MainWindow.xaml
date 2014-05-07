@@ -231,7 +231,7 @@
                         BorderThickness="0" Background="Transparent" TabStripPlacement="Bottom" >
                 <TabItem Header=" ">
                     <ScrollViewer>
-                        <TextBlock Name="textfield" Foreground="Black" Text="{Binding Text}" TextWrapping="Wrap"/>
+                        <TextBlock Name="textfield" Foreground="Black" TextWrapping="Wrap"/>
                     </ScrollViewer>
                 </TabItem>
                 <TabItem IsSelected="True" Header=" ">
